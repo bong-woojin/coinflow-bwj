@@ -1,0 +1,26 @@
+.gnb {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    height: 100%;
+    padding: 0 16px;
+}
+
+.logo {
+    font-size: 15px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--text-primary);
+}
+
+.nav { display: flex; gap: 16px; }
+
+.navItem {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+.navItem:hover { color: var(--text-primary); }
+.active { color: var(--text-primary); }
+
+.searchBox { margin-left: auto; }

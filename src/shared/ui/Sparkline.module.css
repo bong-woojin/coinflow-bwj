@@ -1,0 +1,22 @@
+.chart {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.chart[data-direction='up'] {
+    color: var(--up);
+}
+
+.chart[data-direction='down'] {
+    color: var(--down);
+}
+
+.chart[data-direction='even'] {
+    color: var(--text-tertiary);
+}
+
+.empty {
+    width: 100%;
+    height: 100%;
+}

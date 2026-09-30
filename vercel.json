@@ -1,0 +1,7 @@
+{
+  "regions": ["icn1"],
+  "rewrites": [
+    { "source": "/upbit/:path*", "destination": "/api/upbit?path=:path*" },
+    { "source": "/((?!api/).*)", "destination": "/index.html" }
+  ]
+}

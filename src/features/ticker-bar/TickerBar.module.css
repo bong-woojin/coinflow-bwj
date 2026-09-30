@@ -1,0 +1,23 @@
+.list {
+    display: flex;
+    align-items: center;
+    height: 40px;
+    padding: 0 16px;
+    gap: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+
+.item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+}
+
+.label { color: var(--text-secondary); }
+.placeholder { color: var(--text-tertiary); }
+.stat { display: flex; align-items: center; gap: 6px; white-space: nowrap; }
+.divider { width: 1px; height: 14px; background: var(--fill-subtle); }

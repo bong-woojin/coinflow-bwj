@@ -1,0 +1,30 @@
+.detail {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 0;
+}
+
+.loading { padding: 24px; color: var(--text-secondary); }
+
+/* ── 본문 ── */
+.body {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(280px, 320px);
+    grid-template-rows: minmax(0, 1.2fr) minmax(0, 1fr);
+    grid-template-areas:
+        'chart  chart returns'
+        'quotes flow  info';
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+    gap: 12px;
+    padding: 12px 16px;
+    background: var(--bg);
+}
+
+.chartArea  { grid-area: chart; }
+.returnsArea { grid-area: returns; }
+.quotesArea { grid-area: quotes; }
+.flowArea   { grid-area: flow; }
+.infoArea   { grid-area: info; }

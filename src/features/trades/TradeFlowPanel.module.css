@@ -1,0 +1,80 @@
+.flow {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    padding: 14px 16px 16px;
+    font-size: 12px;
+    font-variant-numeric: tabular-nums;
+}
+
+/* 체결강도 */
+.strength {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+}
+.strengthLabel { font-size: 13px; color: var(--text-secondary); }
+.strengthValue {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+.strengthValue[data-direction='up']   { color: var(--up); }
+.strengthValue[data-direction='down'] { color: var(--down); }
+
+/* 비율 막대 */
+.block { display: flex; flex-direction: column; gap: 6px; }
+
+.blockTitle {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+.hint { font-weight: 400; color: var(--text-tertiary); margin-left: 4px; }
+
+.ratioLabels,
+.ratioValues {
+    display: flex;
+    justify-content: space-between;
+}
+.ratioLabels { font-weight: 600; }
+.ratioValues { color: var(--text-tertiary); }
+
+.bar {
+    display: flex;
+    gap: 2px;
+    height: 6px;
+}
+.barBid,
+.barAsk {
+    border-radius: 3px;
+    transition: width 0.3s ease;
+}
+.barBid { background: var(--up); }
+.barAsk { flex: 1; background: var(--down); }
+
+/* 큰 체결 */
+.bigList { display: flex; flex-direction: column; }
+
+.bigRow {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    height: 30px;
+    font-size: 13px;
+}
+
+.tagBid,
+.tagAsk {
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 600;
+}
+.tagBid { color: var(--up); background: var(--up-flash); }
+.tagAsk { color: var(--down); background: var(--down-flash); }
+
+.bigAmount { font-weight: 600; color: var(--text-primary); }
+.bigTime { margin-left: auto; color: var(--text-tertiary); }
+
+.empty { color: var(--text-tertiary); padding: 8px 0; }

@@ -1,0 +1,149 @@
+.header {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px 32px;
+    padding: 14px 24px;
+    border-bottom: 1px solid var(--divider);
+    flex-shrink: 0;
+}
+
+.headerLeft { flex-shrink: 0; }
+
+.coinNameRow {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 4px;
+}
+
+.coinName {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.symbol {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-tertiary);
+    margin-left: 4px;
+}
+
+.priceRow {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    font-size: 13px;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+}
+
+.price {
+    color: var(--text-primary);
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.dot { color: var(--text-tertiary); }
+
+.changeLabel { color: var(--text-secondary); }
+
+.change { font-weight: 600; }
+
+.liveBadge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    color: var(--text-secondary);
+}
+.liveBadge::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--up);
+    animation: livePulse 1.6s ease-in-out infinite;
+}
+
+@keyframes livePulse {
+    50% { opacity: 0.3; }
+}
+
+.headerRight {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    min-width: 0;
+}
+
+.statCol {
+    display: grid;
+    grid-template-columns: auto auto;
+    align-items: center;
+    column-gap: 20px;
+    row-gap: 6px;
+    padding: 0 20px;
+    font-size: 12px;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+}
+.statCol + .statCol { border-left: 1px solid var(--divider); }
+.statCol:first-child {
+    grid-template-columns: auto auto 56px auto;   /* 범위: 라벨 | 저가 | 막대 | 고가 */
+    column-gap: 10px;
+    padding-left: 0;
+}
+
+.statCol dt { color: var(--text-tertiary); }
+.statCol dd {
+    margin: 0;
+    color: var(--text-primary);
+    font-weight: 500;
+    text-align: right;
+}
+
+.rangeTrack {
+    position: relative;
+    height: 4px;
+    background: var(--fill-subtle);
+    border-radius: 2px;
+}
+
+.rangeFill {
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    border-radius: 2px;
+    background: var(--text-tertiary);
+    opacity: 0.35;
+}
+.rangeFill[data-direction='up']   { background: var(--up); }
+.rangeFill[data-direction='down'] { background: var(--down); }
+
+.rangeDot {
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--text-tertiary);
+}
+.rangeDot[data-direction='up']   { background: var(--up); }
+.rangeDot[data-direction='down'] { background: var(--down); }
+
+/* 관심 버튼 — 토스처럼 둥근 네모 박스 */
+.watchBox {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    margin-left: 12px;
+    border-radius: 10px;
+    background: var(--fill-subtle);
+    font-size: 18px;
+}
+.watchBox:hover { transform: none; background: var(--divider); }

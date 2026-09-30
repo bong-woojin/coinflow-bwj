@@ -1,0 +1,47 @@
+.button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 200px;
+    height: 34px;
+    padding: 0 12px;
+    border-radius: 10px;
+    background: var(--fill-subtle);
+    color: var(--text-tertiary);
+    font-size: 13px;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+.button:hover { background: var(--divider); }
+.button:focus-visible {
+    outline: 2px solid var(--brand);
+    outline-offset: 0;
+}
+
+.icon {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    color: var(--text-secondary);
+}
+
+.key {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 20px;
+    height: 20px;
+    padding: 0 5px;
+    border-radius: 5px;
+    background: var(--fill-subtle);
+    color: var(--text-secondary);
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.label {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

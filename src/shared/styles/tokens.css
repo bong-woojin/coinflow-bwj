@@ -1,0 +1,54 @@
+:root {
+    --bg: #f4f5f8;
+    --surface: #fbfcfd;
+    --divider: #e4e8ec;
+    --fill-subtle:   rgba(7, 25, 76, 0.04);
+    --text-primary:  rgba(26, 31, 41, 0.89);
+    --text-secondary:rgba(22, 31, 46, 0.61);
+    --text-tertiary: rgba(18, 31, 51, 0.47);
+    --up:            #DE2B39;   /* 상승 = 빨강 */
+    --down:          #2272EB;   /* 하락 = 파랑 */
+    --brand:         #3182F6;
+
+    --gnb-h:         52px;
+    --aside-w:       310px;
+    --radius:        12px;
+}
+
+[data-theme='dark'] {
+    --bg: #16171a;
+    --surface: #1e2025;
+    --divider: #2a2f37;
+    --fill-subtle:   rgba(214, 224, 239, 0.09);
+    --text-primary:  rgba(242, 246, 255, 0.90);
+    --text-secondary:rgba(216, 223, 237, 0.59);
+    --text-tertiary: rgba(211, 224, 243, 0.42);
+    --up:            #F5445A;
+    --down:          #4391FF;
+    --brand:         #3182F6;
+}
+
+:root {
+    --up-flash:   rgba(222, 43, 57, 0.13);
+    --down-flash: rgba(34, 114, 235, 0.13);
+}
+
+[data-theme='dark'] {
+    --up-flash:   rgba(245, 68, 90, 0.22);
+    --down-flash: rgba(67, 145, 255, 0.22);
+}
+
+/* 스크롤바 thumb 색 — @property로 등록해야 transition(페이드)이 동작함 */
+@property --scroll-thumb {
+    syntax: '<color>';
+    inherits: true;
+    initial-value: transparent;
+}
+
+:root {
+    --scrollbar-thumb: rgba(110, 120, 135, 0.3);
+}
+
+[data-theme='dark'] {
+    --scrollbar-thumb: rgba(170, 180, 195, 0.6);
+}

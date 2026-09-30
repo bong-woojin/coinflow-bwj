@@ -1,0 +1,71 @@
+.rail {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    height: 100%;
+    padding: 8px 0;
+}
+
+.collapse {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    margin-bottom: 8px;
+    padding: 0;
+    border: 0;
+    border:none;
+    border-radius: 8px;
+    background: transparent;
+    color: var(--text-tertiary);
+    cursor: pointer;
+}
+
+.collapse svg {
+    width: 14px;
+    height: 14px;
+    transition: transform 0.5s ease;
+}
+
+.collapse[aria-expanded='false'] svg {
+    transform: rotate(180deg);
+}
+
+.collapse:hover {
+    background: var(--fill-subtle);
+    color: var(--text-secondary);
+}
+
+.tab {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    width: 44px;
+    padding: 6px 0;
+    border: 0;
+    border-radius: 8px;
+    background: transparent;
+    color: var(--text-tertiary);
+    font-size: 10px;
+    cursor: pointer;
+}
+
+.tab:hover {
+    background: var(--fill-subtle);
+}
+
+.tab[aria-pressed='true'] {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.icon {
+    font-size: 20px;
+}
+
+.bottom {
+    margin-top: auto;
+}

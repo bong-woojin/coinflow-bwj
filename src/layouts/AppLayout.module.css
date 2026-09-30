@@ -1,0 +1,89 @@
+.shell {
+    position: relative;
+    display: grid;
+    height: 100vh;
+    grid-template-rows: var(--gnb-h) 1fr 40px;
+    grid-template-areas:
+    'gnb'
+    'main'
+    'ticker';
+    padding-right: 56px;
+    background: var(--bg);
+}
+
+.shell[data-aside='closed'] {
+    padding-right: 56px;
+}
+
+.gnb {
+    grid-area: gnb;
+    min-width: 0;
+    padding-right: var(--aside-w);
+    transition: padding-right 0.22s ease;
+}
+
+.main {
+    grid-area: main;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    min-height: 0;
+    padding: 0 16px 16px 16px;
+    padding-right: calc(var(--aside-w) + 16px);
+    overflow-x: auto;
+    overflow-y: hidden;
+    transition: padding-right 0.22s ease;
+}
+
+.ticker {
+    grid-area: ticker;
+    min-width: 0;
+    padding-right: var(--aside-w);
+    overflow: hidden;
+    border-top: 1px solid var(--divider);
+    transition: padding-right 0.22s ease;
+}
+
+.shell[data-aside='closed'] .main {
+    padding-right: 16px;
+}
+
+.shell[data-aside='closed'] .ticker,
+.shell[data-aside='closed'] .gnb {
+    padding-right: 0;
+}
+
+.rail {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 30;
+    width: 56px;
+    background: var(--bg);
+    border-left: 1px solid var(--divider);
+}
+
+.aside {
+    position: fixed;
+    top: 0;
+    right: 56px;
+    bottom: 0;
+    z-index: 20;
+    width: var(--aside-w);
+    background: var(--bg);
+    border-left: 1px solid var(--divider);
+    overflow-x: hidden;
+    overflow-y: auto;
+    transform: translateX(0);
+    transition: transform 0.22s ease;
+}
+
+.shell[data-aside='closed'] .aside {
+    transform: translateX(100%);
+    pointer-events: none;
+}
+
+.aside[data-scrolling='true'] {
+    scrollbar-color: rgba(120, 130, 145, 0.45) transparent;
+}

@@ -1,0 +1,32 @@
+.wrap {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.chart {
+    width: 100%;
+    height: 100%;
+}
+
+.error {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-size: 13px;
+    color: var(--text-secondary);
+}
+
+.retry {
+    padding: 6px 14px;
+    border-radius: 8px;
+    background: var(--fill-subtle);
+    color: var(--text-primary);
+    font-size: 13px;
+    font-weight: 600;
+}
+.retry:hover { background: var(--divider); }

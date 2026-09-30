@@ -1,0 +1,71 @@
+.timeframeTabs {
+    display: flex;
+    gap: 4px;
+    padding: 8px 16px;
+    border-bottom: 1px solid var(--divider);
+    flex-shrink: 0;
+}
+
+.tfBtn {
+    padding: 4px 10px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    border-radius: 6px;
+    transition: background 0.15s, color 0.15s;
+}
+
+.tfBtn:hover { background: var(--fill-subtle); color: var(--text-primary); }
+
+.tfActive {
+    background: var(--fill-subtle);
+    color: var(--text-primary);
+}
+
+.tfArrow {
+    font-size: 8px;
+    margin-left: 3px;
+    opacity: 0.6;
+}
+
+.tfGroup {
+    position: relative;
+}
+
+.tfDropdown {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    z-index: 10;
+    background: var(--surface);
+    border: 1px solid var(--divider);
+    border-radius: 8px;
+    padding: 4px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+    min-width: 72px;
+}
+
+.tfDropItem {
+    padding: 6px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    border-radius: 6px;
+    text-align: left;
+    white-space: nowrap;
+}
+
+.tfDropItem:hover { background: var(--fill-subtle); color: var(--text-primary); }
+
+.tfDropActive {
+    background: var(--fill-subtle);
+    color: var(--text-primary);
+}
+
+.chartWrap {
+    flex: 1;
+    min-height: 0;
+}

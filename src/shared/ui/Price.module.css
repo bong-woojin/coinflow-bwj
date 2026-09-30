@@ -1,0 +1,13 @@
+.price {
+    color: var(--text-primary);
+    font-variant-numeric: tabular-nums;
+}
+
+.sm { font-size: 13px; display: block; width: 100%; }
+
+.lg {
+    display: inline;
+    padding: 2px 6px;
+    font-size: 28px;
+    font-weight: 700;
+}

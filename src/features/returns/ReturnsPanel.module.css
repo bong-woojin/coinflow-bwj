@@ -1,0 +1,86 @@
+.returns {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 6px 16px 12px;
+    font-variant-numeric: tabular-nums;
+}
+
+.list {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    justify-content: space-around;   /* 패널 높이에 맞춰 행 간격 자동 */
+}
+
+.row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 72px 64px;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 0;
+}
+.row + .row { border-top: 1px solid var(--divider); }
+
+.meta {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+}
+.label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+.base {
+    font-size: 11px;
+    color: var(--text-tertiary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* 가운데(0%) 기준 막대 — 상승은 오른쪽, 하락은 왼쪽으로 */
+.track {
+    position: relative;
+    height: 6px;
+    border-radius: 3px;
+    background: var(--fill-subtle);
+}
+.track::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: -3px;
+    bottom: -3px;
+    width: 1px;
+    background: var(--divider);
+}
+.bar {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    border-radius: 3px;
+    transition: width 0.3s ease;
+}
+.bar[data-direction='up']   { left: 50%; background: var(--up); }
+.bar[data-direction='down'] { right: 50%; background: var(--down); }
+
+.rate {
+    font-size: 14px;
+    font-weight: 600;
+    text-align: right;
+}
+
+.note {
+    margin-top: 8px;
+    font-size: 11px;
+    color: var(--text-tertiary);
+}
+
+.empty {
+    padding: 16px;
+    font-size: 13px;
+    color: var(--text-tertiary);
+}

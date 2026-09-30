@@ -1,0 +1,60 @@
+.stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.item {
+    min-width: 0;
+}
+
+.label {
+    margin: 0;
+    font-size: 12px;
+    color: var(--text-tertiary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.value {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    margin: 4px 0 8px;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.sub {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-tertiary);
+}
+
+.gauge {
+    height: 4px;
+    border-radius: 2px;
+    background: var(--fill-subtle);
+    overflow: hidden;
+}
+
+.gauge > span {
+    display: block;
+    height: 100%;
+    border-radius: 2px;
+    background: var(--brand);
+    transition: width 0.4s ease;
+}
+
+.gauge[data-tone='greed'] > span {
+    background: var(--up);
+}
+
+.gauge[data-tone='fear'] > span {
+    background: var(--down);
+}
+
+.gauge[data-tone='neutral'] > span {
+    background: var(--text-tertiary);
+}

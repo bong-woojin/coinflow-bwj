@@ -1,0 +1,29 @@
+.wrap {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.value {
+    font-size: 12px;
+    color: var(--text-tertiary);
+    font-variant-numeric: tabular-nums;
+}
+
+.track {
+    position: relative;
+    width: 90px;
+    height: 3px;
+    border-radius: 2px;
+    background: var(--fill-subtle);
+    overflow: hidden;
+}
+
+.fillUp,
+.fillDown {
+    display: block;
+    height: 100%;
+    border-radius: 2px;
+}
+.fillUp   { background: var(--up); }
+.fillDown { background: var(--down); }

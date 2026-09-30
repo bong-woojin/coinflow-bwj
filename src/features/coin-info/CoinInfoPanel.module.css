@@ -1,0 +1,39 @@
+.info {
+    display: flex;
+    flex-direction: column;
+    padding: 6px 16px 12px;
+    font-size: 13px;
+    font-variant-numeric: tabular-nums;
+}
+
+.row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 9px 0;
+}
+.row + .row { border-top: 1px solid var(--divider); }
+
+.row dt {
+    flex-shrink: 0;
+    color: var(--text-tertiary);
+}
+
+.row dd {
+    margin: 0;
+    min-width: 0;
+    text-align: right;
+    font-weight: 500;
+    color: var(--text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.sub {
+    margin-left: 6px;
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--text-tertiary);
+}
