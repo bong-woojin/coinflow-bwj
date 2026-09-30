@@ -12,7 +12,6 @@ type CandleChartProps = {
 }
 
 type UpbitCandle = {
-    candle_date_time_utc: string
     candle_date_time_kst: string
     opening_price: number
     high_price: number
@@ -125,10 +124,9 @@ export default function CandleChart({ market, timeframe = '1m' }: CandleChartPro
             setFailed(false)
 
             const isIntraday = timeframe === '1m' || timeframe === '15m' || timeframe === '1h'
-            const toTime = (c: UpbitCandle) => (isIntraday
-                ? new Date(c.candle_date_time_kst + 'Z').getTime() / 1000
-                : new Date(c.candle_date_time_utc).getTime() / 1000
-            ) as UTCTimestamp
+            // 업비트 시각 문자열엔 오프셋이 없어 그대로 파싱하면 로컬 시간이 됨 → KST 시각에 'Z'를 붙여
+            // UTC로 표시하는 차트에 KST 벽시계 시각이 그대로 찍히게 함 (일봉을 utc로 파싱하면 하루 밀림)
+            const toTime = (c: UpbitCandle) => (new Date(c.candle_date_time_kst + 'Z').getTime() / 1000) as UTCTimestamp
 
             const candles = raw.map((c) => ({
                 time: toTime(c),
