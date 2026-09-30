@@ -20,7 +20,6 @@ let ws: WebSocket | null = null
 let resendTimer: ReturnType<typeof setTimeout> | undefined
 let idleTimer: ReturnType<typeof setTimeout> | undefined
 let reconnectTimer: ReturnType<typeof setTimeout> | undefined
-let pingTimer: ReturnType<typeof setInterval> | undefined
 let reconnectDelay = 1000
 
 const subCount = () => tickerSubs.size + tradeSubs.size
@@ -60,9 +59,12 @@ function dispatch<T extends UpbitSocketMessage>(subs: Set<Subscription<T>>, data
 
 function connect() {
     clearTimeout(reconnectTimer)
+    if (subCount() === 0) return            // 재연결 예약 뒤 구독이 모두 해제된 경우 — 구독 0개짜리 소켓을 열지 않음
     const socket = new WebSocket(UPBIT_WS_URL)
     socket.binaryType = 'arraybuffer'
     ws = socket
+    // 연결마다 따로 관리 — 늦게 도착한 이전 소켓의 close가 새 연결의 PING을 지우지 않도록
+    let pingTimer: ReturnType<typeof setInterval> | undefined
 
     socket.onopen = () => {
         reconnectDelay = 1000
@@ -93,10 +95,12 @@ function connect() {
 function closeWhenIdle() {
     clearTimeout(idleTimer)
     idleTimer = setTimeout(() => {
-        if (subCount() > 0 || !ws) return
-        const socket = ws
-        ws = null
+        if (subCount() > 0) return
+        // 연결이 끊겨 ws가 null이어도 예약된 재연결은 반드시 취소
         clearTimeout(reconnectTimer)
+        if (!ws) return
+        const socket = ws
+        ws = null                           // handleDown이 '의도적 종료'로 보고 재연결하지 않도록 먼저 비움
         socket.close()
     }, IDLE_CLOSE_DELAY)
 }
