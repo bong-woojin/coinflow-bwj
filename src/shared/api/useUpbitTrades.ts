@@ -32,18 +32,22 @@ export function useUpbitTrades(market: string | undefined) {
             .then((text) => {
                 if (cancelled) return
                 const data = parseUpbitJson<UpbitTradeTick[]>(text)
-                setState({
-                    market,
-                    trades: data.map((t) => ({
-                        id: String(t.sequential_id),
-                        price: t.trade_price,
-                        volume: t.trade_volume,
-                        askBid: t.ask_bid,
-                        timestamp: t.timestamp,
-                    })),
+                setState((prev) => {
+                    const live = prev.market === market ? prev.trades : []
+                    const seen = new Set(live.map((t) => t.id))
+                    const rest = data
+                        .map((t) => ({
+                            id: String(t.sequential_id),
+                            price: t.trade_price,
+                            volume: t.trade_volume,
+                            askBid: t.ask_bid,
+                            timestamp: t.timestamp,
+                        }))
+                        .filter((t) => !seen.has(t.id))
+                    return { market, trades: [...live, ...rest].slice(0, MAX) }
                 })
             })
-            .catch(() => {})
+            .catch((e) => console.error('[useUpbitTrades]', e))
 
         // 시세 피드와 같은 방식: 소켓 메시지는 버퍼에만 쌓고 200ms마다 한 번에 반영
         let buffer: Trade[] = []
@@ -59,7 +63,7 @@ export function useUpbitTrades(market: string | undefined) {
 
         const flush = setInterval(() => {
             if (buffer.length === 0) return
-            const batch = buffer.reverse()     // 도착 순서(오래된 → 최신)를 목록 순서(최신 위)로
+            const batch = buffer.reverse() // 도착 순서(오래된 → 최신)를 목록 순서(최신 위)로
             buffer = []
             setState((prev) => {
                 // 이전 코인의 목록이 남아 있으면 버리고 새로 시작

@@ -1,27 +1,52 @@
 <!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>COINFLOW</title>
-    <script>
-      (function () {
-        var theme = 'light'
-        try {
-          var saved = localStorage.getItem('coinflow-ui')
-          if (saved) {
-            theme = JSON.parse(saved).state.theme || theme
-          } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-            theme = 'dark'
-          }
-        } catch (_) {}
-        document.documentElement.dataset.theme = theme
-      })()
-    </script>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>COINFLOW</title>
+        <meta
+            name="description"
+            content="업비트 KRW 마켓 실시간 시세 — 289개 코인의 현재가, 등락률, 거래대금을 한눈에 확인하세요."
+        />
+
+        <!-- Open Graph -->
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://coinflow-bwj.vercel.app/" />
+        <meta property="og:title" content="COINFLOW — 실시간 암호화폐 시세" />
+        <meta
+            property="og:description"
+            content="업비트 KRW 마켓 289개 코인의 실시간 시세, 차트, 체결내역을 제공합니다."
+        />
+        <meta property="og:image" content="https://coinflow-bwj.vercel.app/og.png" />
+
+        <!-- Twitter Card -->
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="COINFLOW — 실시간 암호화폐 시세" />
+        <meta
+            name="twitter:description"
+            content="업비트 KRW 마켓 289개 코인의 실시간 시세, 차트, 체결내역을 제공합니다."
+        />
+        <meta name="twitter:image" content="https://coinflow-bwj.vercel.app/og.png" />
+
+        <!-- FOUC 방지: 첫 페인트 전 테마 적용 -->
+        <script>
+            ;(function () {
+                var theme = 'light'
+                try {
+                    var saved = localStorage.getItem('coinflow-ui')
+                    if (saved) {
+                        theme = JSON.parse(saved).state.theme || theme
+                    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                        theme = 'dark'
+                    }
+                } catch (_) {}
+                document.documentElement.dataset.theme = theme
+            })()
+        </script>
+    </head>
+    <body>
+        <div id="root"></div>
+        <script type="module" src="/src/main.tsx"></script>
+    </body>
 </html>

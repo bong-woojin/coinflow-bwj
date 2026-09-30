@@ -12,7 +12,9 @@
     cursor: pointer;
     transition: background 0.15s;
 }
-.button:hover { background: var(--divider); }
+.button:hover {
+    background: var(--divider);
+}
 .button:focus-visible {
     outline: 2px solid var(--brand);
     outline-offset: 0;

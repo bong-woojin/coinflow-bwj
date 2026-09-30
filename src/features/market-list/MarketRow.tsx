@@ -1,7 +1,13 @@
 import { memo } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useMarketStore } from '../../shared/store/market'
-import { formatPrice, formatTradePrice, formatCoinVolume, getDirection, toSymbol } from '../../shared/lib/format'
+import {
+    formatPrice,
+    formatTradePrice,
+    formatCoinVolume,
+    getDirection,
+    toSymbol,
+} from '../../shared/lib/format'
 import { useFlash } from './useFlash'
 import Price from '../../shared/ui/Price'
 import ChangeRate from '../../shared/ui/ChangeRate'
@@ -22,7 +28,17 @@ type MarketRowProps = {
     fallbackCoinVolume: number
 }
 
-function MarketRow({market, koreanName, rank, fallbackPrice, fallbackRate, fallbackVolume, fallbackHigh, fallbackLow, fallbackCoinVolume,}: MarketRowProps) {
+function MarketRow({
+    market,
+    koreanName,
+    rank,
+    fallbackPrice,
+    fallbackRate,
+    fallbackVolume,
+    fallbackHigh,
+    fallbackLow,
+    fallbackCoinVolume,
+}: MarketRowProps) {
     const live = useMarketStore((s) => s.liveMap[market])
     const navigate = useNavigate()
 
@@ -37,12 +53,10 @@ function MarketRow({market, koreanName, rank, fallbackPrice, fallbackRate, fallb
     const rateCellRef = useFlash<HTMLSpanElement>(tradePrice, getDirection(changeRate))
 
     return (
-        <div
-            className={styles.row}
-            role="row"
-            onClick={() => navigate(`/coins/${market}`)}
-        >
-            <span role="cell"><WatchButton market={market} /></span>
+        <div className={styles.row} role="row" onClick={() => navigate(`/coins/${market}`)}>
+            <span role="cell">
+                <WatchButton market={market} />
+            </span>
             <span role="cell">{rank}</span>
             <span className={styles.coin} role="cell">
                 <Link to={`/coins/${market}`} className={styles.coinLink}>

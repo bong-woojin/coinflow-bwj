@@ -42,6 +42,6 @@ export const useUi = create<UiState>()(
                     document.documentElement.dataset.theme = state.theme
                 }
             },
-        }
-    )
+        },
+    ),
 )

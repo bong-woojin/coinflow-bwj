@@ -49,9 +49,13 @@
     color: var(--text-primary);
     font-size: 14px;
 }
-.input::placeholder { color: var(--text-tertiary); }
+.input::placeholder {
+    color: var(--text-tertiary);
+}
 .input:focus,
-.input:focus-visible { outline: none; }
+.input:focus-visible {
+    outline: none;
+}
 
 /* 목록 */
 .body {
@@ -61,9 +65,15 @@
 }
 
 /* 스크롤바 — 홈 패널보다 얇고 연하게 (thumb 실제 두께 = width - border*2 = 4px) */
-.body::-webkit-scrollbar { width: 8px; }
-.body::-webkit-scrollbar-button { display: none; }
-.body::-webkit-scrollbar-track { background: transparent; }
+.body::-webkit-scrollbar {
+    width: 8px;
+}
+.body::-webkit-scrollbar-button {
+    display: none;
+}
+.body::-webkit-scrollbar-track {
+    background: transparent;
+}
 .body::-webkit-scrollbar-thumb {
     border: 2px solid transparent;
     border-radius: 10px;
@@ -78,7 +88,9 @@
     }
 }
 
-.section + .section { margin-top: 12px; }
+.section + .section {
+    margin-top: 12px;
+}
 
 .sectionHead {
     display: flex;
@@ -93,7 +105,9 @@
     font-weight: 600;
     color: var(--text-primary);
 }
-.count { color: var(--brand); }
+.count {
+    color: var(--brand);
+}
 .asOf {
     font-size: 12px;
     color: var(--text-tertiary);
@@ -110,7 +124,9 @@
     text-align: left;
     cursor: pointer;
 }
-.row[data-active='true'] { background: var(--fill-subtle); }
+.row[data-active='true'] {
+    background: var(--fill-subtle);
+}
 
 .rank {
     width: 14px;
@@ -174,8 +190,13 @@
 }
 
 @keyframes fade {
-    from { opacity: 0; }
+    from {
+        opacity: 0;
+    }
 }
 @keyframes drop {
-    from { opacity: 0; transform: translateY(-6px); }
+    from {
+        opacity: 0;
+        transform: translateY(-6px);
+    }
 }

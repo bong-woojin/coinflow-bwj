@@ -16,10 +16,14 @@ export default function MarketTable({ tickers, snapshotAt }: MarketTableProps) {
                     {snapshotAt ? `순위·${formatSnapshotTime(snapshotAt)}` : '순위'}
                 </span>
                 <span role="columnheader">현재가</span>
-                <span role="columnheader" className={styles.rateHead}>등락률</span>
+                <span role="columnheader" className={styles.rateHead}>
+                    등락률
+                </span>
                 <span role="columnheader">고가</span>
                 <span role="columnheader">저가</span>
-                <span role="columnheader" className={styles.rangeHead}>일중 위치</span>
+                <span role="columnheader" className={styles.rangeHead}>
+                    일중 위치
+                </span>
                 <span role="columnheader">거래대금 순</span>
                 <span role="columnheader">거래량</span>
             </div>

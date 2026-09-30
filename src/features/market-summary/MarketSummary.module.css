@@ -152,9 +152,15 @@
     white-space: nowrap;
 }
 
-.subDiff[data-direction='up'] { color: var(--up); }
-.subDiff[data-direction='down'] { color: var(--down); }
-.subDiff[data-direction='even'] { color: var(--text-secondary); }
+.subDiff[data-direction='up'] {
+    color: var(--up);
+}
+.subDiff[data-direction='down'] {
+    color: var(--down);
+}
+.subDiff[data-direction='even'] {
+    color: var(--text-secondary);
+}
 
 .subRate {
     font-size: 12px;

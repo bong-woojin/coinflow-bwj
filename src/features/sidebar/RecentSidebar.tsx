@@ -9,10 +9,7 @@ export default function RecentSidebar() {
     const remove = useRecent((s) => s.remove)
     const tickers = useMarketStore((s) => s.tickers)
 
-    const nameMap = useMemo(
-        () => new Map(tickers.map((t) => [t.market, t.koreanName])),
-        [tickers]
-    )
+    const nameMap = useMemo(() => new Map(tickers.map((t) => [t.market, t.koreanName])), [tickers])
 
     return (
         <div className={styles.sidebar}>

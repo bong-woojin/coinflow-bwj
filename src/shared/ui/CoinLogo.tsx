@@ -13,8 +13,8 @@ export default function CoinLogo({ symbol, size = 24 }: Props) {
     if (failed) {
         return (
             <span className={styles.fallback} style={style} aria-hidden="true">
-        {symbol.slice(0, 1)}
-      </span>
+                {symbol.slice(0, 1)}
+            </span>
         )
     }
 

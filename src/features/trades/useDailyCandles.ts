@@ -35,11 +35,12 @@ export function useDailyCandles(market: string, count = 30) {
                         close: c.trade_price,
                         changeRate: c.change_rate,
                         volume: c.candle_acc_trade_volume,
-                    }))
+                    })),
                 )
             })
             .catch((e) => {
-                if (!cancelled) setError(e instanceof Error ? e.message : '알 수 없는 오류가 발생했습니다')
+                if (!cancelled)
+                    setError(e instanceof Error ? e.message : '알 수 없는 오류가 발생했습니다')
             })
 
         return () => {

@@ -27,12 +27,7 @@ export default function AppLayout() {
                 <Outlet />
             </main>
 
-            <aside
-                ref={asideRef}
-                className={styles.aside}
-                id="aside-panel"
-                inert={!asideOpen}
-            >
+            <aside ref={asideRef} className={styles.aside} id="aside-panel" inert={!asideOpen}>
                 {sidebarTab === 'watchlist' ? <WatchlistSidebar /> : <RecentSidebar />}
             </aside>
 

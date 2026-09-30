@@ -12,10 +12,15 @@
     font-weight: 600;
     color: var(--text-secondary);
     border-radius: 6px;
-    transition: background 0.15s, color 0.15s;
+    transition:
+        background 0.15s,
+        color 0.15s;
 }
 
-.tfBtn:hover { background: var(--fill-subtle); color: var(--text-primary); }
+.tfBtn:hover {
+    background: var(--fill-subtle);
+    color: var(--text-primary);
+}
 
 .tfActive {
     background: var(--fill-subtle);
@@ -58,7 +63,10 @@
     white-space: nowrap;
 }
 
-.tfDropItem:hover { background: var(--fill-subtle); color: var(--text-primary); }
+.tfDropItem:hover {
+    background: var(--fill-subtle);
+    color: var(--text-primary);
+}
 
 .tfDropActive {
     background: var(--fill-subtle);

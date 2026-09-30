@@ -26,8 +26,13 @@ export default function Segmented<T extends string>({
     const groupRef = useRef<HTMLDivElement>(null)
 
     const handleKeyDown = (e: React.KeyboardEvent, currentValue: T) => {
-        if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft' &&
-            e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return
+        if (
+            e.key !== 'ArrowRight' &&
+            e.key !== 'ArrowLeft' &&
+            e.key !== 'ArrowDown' &&
+            e.key !== 'ArrowUp'
+        )
+            return
         e.preventDefault()
         const idx = options.findIndex((o) => o.value === currentValue)
         const next =
@@ -35,9 +40,7 @@ export default function Segmented<T extends string>({
                 ? (idx + 1) % options.length
                 : (idx - 1 + options.length) % options.length
         onChange(options[next].value)
-        groupRef.current
-            ?.querySelectorAll<HTMLButtonElement>('[role="tab"]')
-            [next]?.focus()
+        groupRef.current?.querySelectorAll<HTMLButtonElement>('[role="tab"]')[next]?.focus()
     }
 
     return (

@@ -43,17 +43,27 @@ export function usePeriodBases(market: string) {
 
                 for (const p of DAY_PERIODS) {
                     const c = days[p.days]
-                    if (c) list.push({ label: p.label, date: c.candle_date_time_kst.slice(0, 10), price: c.trade_price })
+                    if (c)
+                        list.push({
+                            label: p.label,
+                            date: c.candle_date_time_kst.slice(0, 10),
+                            price: c.trade_price,
+                        })
                 }
                 const yearAgo = weeks[52]
                 if (yearAgo) {
-                    list.push({ label: '1년', date: yearAgo.candle_date_time_kst.slice(0, 10), price: yearAgo.opening_price })
+                    list.push({
+                        label: '1년',
+                        date: yearAgo.candle_date_time_kst.slice(0, 10),
+                        price: yearAgo.opening_price,
+                    })
                 }
 
                 setBases(list)
             })
             .catch((e) => {
-                if (!cancelled) setError(e instanceof Error ? e.message : '알 수 없는 오류가 발생했습니다')
+                if (!cancelled)
+                    setError(e instanceof Error ? e.message : '알 수 없는 오류가 발생했습니다')
             })
 
         return () => {

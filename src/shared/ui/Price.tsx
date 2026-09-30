@@ -7,9 +7,5 @@ type PriceProps = {
 }
 
 export default function Price({ value, size = 'sm' }: PriceProps) {
-    return (
-        <span className={`${styles.price} ${styles[size]}`}>
-      {formatPrice(value)}
-    </span>
-    )
+    return <span className={`${styles.price} ${styles[size]}`}>{formatPrice(value)}</span>
 }

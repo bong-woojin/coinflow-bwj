@@ -17,7 +17,20 @@
     white-space: nowrap;
 }
 
-.label { color: var(--text-secondary); }
-.placeholder { color: var(--text-tertiary); }
-.stat { display: flex; align-items: center; gap: 6px; white-space: nowrap; }
-.divider { width: 1px; height: 14px; background: var(--fill-subtle); }
+.label {
+    color: var(--text-secondary);
+}
+.placeholder {
+    color: var(--text-tertiary);
+}
+.stat {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+}
+.divider {
+    width: 1px;
+    height: 14px;
+    background: var(--fill-subtle);
+}

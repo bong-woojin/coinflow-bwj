@@ -88,7 +88,12 @@ export default function CoinDetail() {
                 </Panel>
 
                 <Panel title="시세" className={styles.quotesArea}>
-                    <QuotesPanel key={market} market={market} trades={trades} prevClose={snapshot.prev_closing_price} />
+                    <QuotesPanel
+                        key={market}
+                        market={market}
+                        trades={trades}
+                        prevClose={snapshot.prev_closing_price}
+                    />
                 </Panel>
 
                 <Panel title="매수·매도 비중" className={styles.flowArea}>

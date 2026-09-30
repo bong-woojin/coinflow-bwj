@@ -1,4 +1,10 @@
-import { formatChangeRate, formatCoinVolume, formatPrice, getDirection, formatShortDate } from '../../shared/lib/format'
+import {
+    formatChangeRate,
+    formatCoinVolume,
+    formatPrice,
+    getDirection,
+    formatShortDate,
+} from '../../shared/lib/format'
 import { useDailyCandles } from './useDailyCandles'
 import styles from './TradeList.module.css'
 import dir from '../../shared/styles/direction.module.css'

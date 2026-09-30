@@ -9,10 +9,7 @@ export default function WatchlistSidebar() {
     const toggle = useWatchlist((s) => s.toggle)
     const tickers = useMarketStore((s) => s.tickers)
 
-    const nameMap = useMemo(
-        () => new Map(tickers.map((t) => [t.market, t.koreanName])),
-        [tickers]
-    )
+    const nameMap = useMemo(() => new Map(tickers.map((t) => [t.market, t.koreanName])), [tickers])
 
     return (
         <div className={styles.sidebar}>

@@ -5,7 +5,7 @@ type Derived = {
     upCount: number
     downCount: number
     totalTradePrice: number
-    rankMap: Record<string, number>     // 거래대금 순위 (1위부터)
+    rankMap: Record<string, number> // 거래대금 순위 (1위부터)
 }
 
 type MarketState = Derived & {
@@ -54,7 +54,8 @@ export const useMarketStore = create<MarketState>((set) => ({
     downCount: 0,
     totalTradePrice: 0,
     rankMap: {},
-    setTickers: (tickers, at) => set((s) => ({ tickers, snapshotAt: at, ...derive(tickers, s.liveMap) })),
+    setTickers: (tickers, at) =>
+        set((s) => ({ tickers, snapshotAt: at, ...derive(tickers, s.liveMap) })),
     applyLiveBatch: (list) =>
         set((s) => {
             const next = { ...s.liveMap }

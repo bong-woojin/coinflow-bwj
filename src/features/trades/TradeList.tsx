@@ -1,11 +1,17 @@
-import { formatChangeRate, formatPrice, formatTime, formatVolume, getDirection } from '../../shared/lib/format'
+import {
+    formatChangeRate,
+    formatPrice,
+    formatTime,
+    formatVolume,
+    getDirection,
+} from '../../shared/lib/format'
 import type { Trade } from '../../shared/types'
 import styles from './TradeList.module.css'
 import dir from '../../shared/styles/direction.module.css'
 
 type TradeListProps = {
     trades: Trade[]
-    prevClose: number   // 등락률 계산 기준 (전일 종가)
+    prevClose: number // 등락률 계산 기준 (전일 종가)
 }
 
 export default function TradeList({ trades, prevClose }: TradeListProps) {
@@ -27,13 +33,18 @@ export default function TradeList({ trades, prevClose }: TradeListProps) {
                 return (
                     <div className={styles.row} role="row" key={trade.id}>
                         <span role="cell">{formatPrice(trade.price)}원</span>
-                        <span role="cell" className={trade.askBid === 'BID' ? styles.bid : styles.ask}>
+                        <span
+                            role="cell"
+                            className={trade.askBid === 'BID' ? styles.bid : styles.ask}
+                        >
                             {formatVolume(trade.volume)}
                         </span>
                         <span role="cell" className={dir[getDirection(rate)]}>
                             {formatChangeRate(rate)}
                         </span>
-                        <span role="cell" className={styles.time}>{formatTime(trade.timestamp)}</span>
+                        <span role="cell" className={styles.time}>
+                            {formatTime(trade.timestamp)}
+                        </span>
                     </div>
                 )
             })}

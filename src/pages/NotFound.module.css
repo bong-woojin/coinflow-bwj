@@ -27,7 +27,9 @@
     font-size: 14px;
     font-weight: 600;
 }
-.homeLink:hover { filter: brightness(0.95); }
+.homeLink:hover {
+    filter: brightness(0.95);
+}
 .homeLink:focus-visible {
     outline: 2px solid var(--brand);
     outline-offset: 2px;

@@ -34,9 +34,11 @@ export default function QuotesPanel({ market, trades, prevClose }: QuotesPanelPr
                 />
             </div>
             <div id={`quotes-panel-${mode}`} role="tabpanel" aria-labelledby={`quotes-${mode}`}>
-                {mode === 'live'
-                    ? <TradeList trades={trades} prevClose={prevClose} />
-                    : <DailyList market={market} />}
+                {mode === 'live' ? (
+                    <TradeList trades={trades} prevClose={prevClose} />
+                ) : (
+                    <DailyList market={market} />
+                )}
             </div>
         </>
     )

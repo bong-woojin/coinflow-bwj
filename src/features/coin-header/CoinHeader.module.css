@@ -8,7 +8,9 @@
     flex-shrink: 0;
 }
 
-.headerLeft { flex-shrink: 0; }
+.headerLeft {
+    flex-shrink: 0;
+}
 
 .coinNameRow {
     display: flex;
@@ -46,11 +48,17 @@
     line-height: 1.2;
 }
 
-.dot { color: var(--text-tertiary); }
+.dot {
+    color: var(--text-tertiary);
+}
 
-.changeLabel { color: var(--text-secondary); }
+.changeLabel {
+    color: var(--text-secondary);
+}
 
-.change { font-weight: 600; }
+.change {
+    font-weight: 600;
+}
 
 .liveBadge {
     display: inline-flex;
@@ -68,7 +76,9 @@
 }
 
 @keyframes livePulse {
-    50% { opacity: 0.3; }
+    50% {
+        opacity: 0.3;
+    }
 }
 
 .headerRight {
@@ -89,14 +99,18 @@
     font-variant-numeric: tabular-nums;
     white-space: nowrap;
 }
-.statCol + .statCol { border-left: 1px solid var(--divider); }
+.statCol + .statCol {
+    border-left: 1px solid var(--divider);
+}
 .statCol:first-child {
-    grid-template-columns: auto auto 56px auto;   /* 범위: 라벨 | 저가 | 막대 | 고가 */
+    grid-template-columns: auto auto 56px auto; /* 범위: 라벨 | 저가 | 막대 | 고가 */
     column-gap: 10px;
     padding-left: 0;
 }
 
-.statCol dt { color: var(--text-tertiary); }
+.statCol dt {
+    color: var(--text-tertiary);
+}
 .statCol dd {
     margin: 0;
     color: var(--text-primary);
@@ -113,13 +127,19 @@
 
 .rangeFill {
     position: absolute;
-    left: 0; top: 0; bottom: 0;
+    left: 0;
+    top: 0;
+    bottom: 0;
     border-radius: 2px;
     background: var(--text-tertiary);
     opacity: 0.35;
 }
-.rangeFill[data-direction='up']   { background: var(--up); }
-.rangeFill[data-direction='down'] { background: var(--down); }
+.rangeFill[data-direction='up'] {
+    background: var(--up);
+}
+.rangeFill[data-direction='down'] {
+    background: var(--down);
+}
 
 .rangeDot {
     position: absolute;
@@ -130,8 +150,12 @@
     border-radius: 50%;
     background: var(--text-tertiary);
 }
-.rangeDot[data-direction='up']   { background: var(--up); }
-.rangeDot[data-direction='down'] { background: var(--down); }
+.rangeDot[data-direction='up'] {
+    background: var(--up);
+}
+.rangeDot[data-direction='down'] {
+    background: var(--down);
+}
 
 /* 관심 버튼 — 토스처럼 둥근 네모 박스 */
 .watchBox {
@@ -146,4 +170,7 @@
     background: var(--fill-subtle);
     font-size: 18px;
 }
-.watchBox:hover { transform: none; background: var(--divider); }
+.watchBox:hover {
+    transform: none;
+    background: var(--divider);
+}

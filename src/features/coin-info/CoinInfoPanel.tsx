@@ -1,4 +1,10 @@
-import { formatCoinVolume, formatPrice, formatTradePrice, toSymbol, formatShortDate } from '../../shared/lib/format'
+import {
+    formatCoinVolume,
+    formatPrice,
+    formatTradePrice,
+    toSymbol,
+    formatShortDate,
+} from '../../shared/lib/format'
 import styles from './CoinInfoPanel.module.css'
 
 type CoinInfoPanelProps = {
@@ -26,8 +32,16 @@ export default function CoinInfoPanel(props: CoinInfoPanelProps) {
         { label: '전일 종가', value: `${formatPrice(props.prevClosePrice)}원` },
         { label: '거래대금 (24h)', value: formatTradePrice(props.tradeAmount24h) },
         { label: '거래량 (24h)', value: `${formatCoinVolume(props.tradeVolume24h)} ${symbol}` },
-        { label: '52주 최고', value: `${formatPrice(props.high52)}원`, sub: formatShortDate(props.high52Date) },
-        { label: '52주 최저', value: `${formatPrice(props.low52)}원`, sub: formatShortDate(props.low52Date) },
+        {
+            label: '52주 최고',
+            value: `${formatPrice(props.high52)}원`,
+            sub: formatShortDate(props.high52Date),
+        },
+        {
+            label: '52주 최저',
+            value: `${formatPrice(props.low52)}원`,
+            sub: formatShortDate(props.low52Date),
+        },
     ]
 
     return (

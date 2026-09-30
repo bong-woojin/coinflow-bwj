@@ -13,7 +13,12 @@ export async function fetchUpbit(url: string): Promise<Response> {
     for (let attempt = 0; ; attempt++) {
         try {
             const res = await fetch(url)
-            if (res.ok || (res.status !== 429 && res.status < 500) || attempt >= RETRY_DELAYS.length) return res
+            if (
+                res.ok ||
+                (res.status !== 429 && res.status < 500) ||
+                attempt >= RETRY_DELAYS.length
+            )
+                return res
         } catch (e) {
             if (attempt >= RETRY_DELAYS.length) throw e
         }
@@ -25,7 +30,8 @@ export async function fetchUpbit(url: string): Promise<Response> {
 export const upbitApi = {
     marketAll: () => `${REST_BASE}/market/all`,
     ticker: (markets: string) => `${REST_BASE}/ticker?markets=${markets}`,
-    tradeTicks: (market: string, count: number) => `${REST_BASE}/trades/ticks?market=${market}&count=${count}`,
+    tradeTicks: (market: string, count: number) =>
+        `${REST_BASE}/trades/ticks?market=${market}&count=${count}`,
     candles: (unit: CandleUnit, market: string, count: number) =>
         `${REST_BASE}/candles/${unit}?market=${market}&count=${count}`,
 }

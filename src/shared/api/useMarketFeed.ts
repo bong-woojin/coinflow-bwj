@@ -43,6 +43,7 @@ export function useMarketFeed() {
                         tradePrice: t.trade_price,
                         prevClosingPrice: t.prev_closing_price,
                         changeRate: t.signed_change_rate,
+                        changePrice: t.signed_change_price,
                         accTradePrice24h: t.acc_trade_price_24h,
                         highPrice: t.high_price,
                         lowPrice: t.low_price,

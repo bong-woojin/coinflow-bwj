@@ -61,16 +61,14 @@ export default function SearchModal() {
             const matched = items.filter(
                 (it) =>
                     it.koreanName.toLowerCase().includes(keyword) ||
-                    it.symbol.toLowerCase().includes(keyword)
+                    it.symbol.toLowerCase().includes(keyword),
             )
             return [{ title: '검색 결과', items: matched.slice(0, RESULT_LIMIT) }]
         }
         const popular = [...items]
             .sort((a, b) => b.tradeAmount - a.tradeAmount)
             .slice(0, SECTION_SIZE)
-        const rising = [...items]
-            .sort((a, b) => b.changeRate - a.changeRate)
-            .slice(0, SECTION_SIZE)
+        const rising = [...items].sort((a, b) => b.changeRate - a.changeRate).slice(0, SECTION_SIZE)
         return [
             { title: '인기 코인', items: popular },
             { title: '급상승 코인', items: rising },
@@ -85,7 +83,7 @@ export default function SearchModal() {
         prevFocusRef.current = document.activeElement
         inputRef.current?.focus()
         return () => {
-            (prevFocusRef.current as HTMLElement | null)?.focus()
+            ;(prevFocusRef.current as HTMLElement | null)?.focus()
         }
     }, [])
 
@@ -133,7 +131,7 @@ export default function SearchModal() {
             return
         }
 
-        if ((e.nativeEvent as InputEvent).isComposing) return   // 한글 조합 중 Enter/방향키 무시
+        if (e.nativeEvent.isComposing) return // 한글 조합 중 Enter/방향키 무시
 
         switch (e.key) {
             case 'ArrowDown':
@@ -206,11 +204,15 @@ export default function SearchModal() {
                                     <h3 className={styles.sectionTitle}>
                                         {section.title}
                                         {keyword && (
-                                            <span className={styles.count}>{section.items.length}</span>
+                                            <span className={styles.count}>
+                                                {section.items.length}
+                                            </span>
                                         )}
                                     </h3>
                                     {!keyword && snapshotAt && (
-                                        <span className={styles.asOf}>{formatSnapshotTime(snapshotAt)}</span>
+                                        <span className={styles.asOf}>
+                                            {formatSnapshotTime(snapshotAt)}
+                                        </span>
                                     )}
                                 </header>
 
@@ -233,10 +235,18 @@ export default function SearchModal() {
                                                         onMouseMove={() => setActiveIndex(index)}
                                                         onClick={() => go(item)}
                                                     >
-                                                        {!keyword && <span className={styles.rank}>{i + 1}</span>}
+                                                        {!keyword && (
+                                                            <span className={styles.rank}>
+                                                                {i + 1}
+                                                            </span>
+                                                        )}
                                                         <CoinLogo symbol={item.symbol} size={28} />
-                                                        <span className={styles.name}>{item.koreanName}</span>
-                                                        <span className={styles.symbol}>{item.symbol}</span>
+                                                        <span className={styles.name}>
+                                                            {item.koreanName}
+                                                        </span>
+                                                        <span className={styles.symbol}>
+                                                            {item.symbol}
+                                                        </span>
                                                         <span className={styles.rate}>
                                                             <ChangeRate rate={item.changeRate} />
                                                         </span>
@@ -265,6 +275,6 @@ export default function SearchModal() {
                 </footer>
             </div>
         </div>,
-        document.body
+        document.body,
     )
 }

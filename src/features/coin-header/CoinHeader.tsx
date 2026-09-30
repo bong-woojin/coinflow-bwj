@@ -1,5 +1,12 @@
 import type { UpbitSocketTicker, UpbitTicker } from '../../shared/types'
-import { calcStrength, formatChangeSummary, formatCoinVolume, formatPrice, getDirection, toSymbol } from '../../shared/lib/format'
+import {
+    formatChangeSummary,
+    formatCoinVolume,
+    formatPrice,
+    getDirection,
+    toSymbol,
+} from '../../shared/lib/format'
+import { calcStrength } from '../../shared/lib/metrics'
 import { useTradeRank } from './useTradeRank'
 import CoinLogo from '../../shared/ui/CoinLogo'
 import WatchButton from '../../shared/ui/WatchButton'
@@ -76,9 +83,13 @@ export default function CoinHeader({ market, koreanName, snapshot, live }: CoinH
 
                 <dl className={styles.statCol}>
                     <dt>매수 체결량(오늘)</dt>
-                    <dd>{bidVolume !== undefined ? `${formatCoinVolume(bidVolume)} ${symbol}` : '-'}</dd>
+                    <dd>
+                        {bidVolume !== undefined ? `${formatCoinVolume(bidVolume)} ${symbol}` : '-'}
+                    </dd>
                     <dt>매도 체결량(오늘)</dt>
-                    <dd>{askVolume !== undefined ? `${formatCoinVolume(askVolume)} ${symbol}` : '-'}</dd>
+                    <dd>
+                        {askVolume !== undefined ? `${formatCoinVolume(askVolume)} ${symbol}` : '-'}
+                    </dd>
                 </dl>
 
                 <WatchButton market={market} className={styles.watchBox} />

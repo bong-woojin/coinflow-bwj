@@ -13,14 +13,12 @@ export function useSparklines(markets: string[]) {
 
             const results = await Promise.all(
                 list.map(async (market) => {
-                    const res = await fetchUpbit(
-                        upbitApi.candles('minutes/60', market, 24)
-                    )
+                    const res = await fetchUpbit(upbitApi.candles('minutes/60', market, 24))
                     if (!res.ok) return [market, [] as number[]] as const
 
                     const json: { trade_price: number }[] = await res.json()
                     return [market, json.map((c) => c.trade_price).reverse()] as const
-                })
+                }),
             )
 
             if (cancelled) return

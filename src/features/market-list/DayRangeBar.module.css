@@ -25,5 +25,9 @@
     height: 100%;
     border-radius: 2px;
 }
-.fillUp   { background: var(--up); }
-.fillDown { background: var(--down); }
+.fillUp {
+    background: var(--up);
+}
+.fillDown {
+    background: var(--down);
+}

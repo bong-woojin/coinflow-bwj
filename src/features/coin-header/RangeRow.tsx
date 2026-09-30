@@ -19,8 +19,16 @@ export default function RangeRow({ label, low, high, current }: RangeRowProps) {
             <dt>{label}</dt>
             <dd>{formatPrice(low)}원</dd>
             <dd className={styles.rangeTrack} aria-hidden="true">
-                <span className={styles.rangeFill} data-direction={direction} style={{ width: `${clamped}%` }} />
-                <span className={styles.rangeDot} data-direction={direction} style={{ left: `${clamped}%` }} />
+                <span
+                    className={styles.rangeFill}
+                    data-direction={direction}
+                    style={{ width: `${clamped}%` }}
+                />
+                <span
+                    className={styles.rangeDot}
+                    data-direction={direction}
+                    style={{ left: `${clamped}%` }}
+                />
             </dd>
             <dd>{formatPrice(high)}원</dd>
         </>

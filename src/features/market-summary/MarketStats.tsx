@@ -27,7 +27,18 @@ export default function MarketStats() {
                     {fng ? fng.value : '—'}
                     {fng && <span className={styles.sub}>{fng.label}</span>}
                 </p>
-                <div className={styles.gauge} data-tone={fng ? (fng.value >= 55 ? 'greed' : fng.value <= 45 ? 'fear' : 'neutral') : 'neutral'}>
+                <div
+                    className={styles.gauge}
+                    data-tone={
+                        fng
+                            ? fng.value >= 55
+                                ? 'greed'
+                                : fng.value <= 45
+                                  ? 'fear'
+                                  : 'neutral'
+                            : 'neutral'
+                    }
+                >
                     <span style={{ width: `${fng?.value ?? 0}%` }} />
                 </div>
             </div>

@@ -3,7 +3,11 @@
     font-variant-numeric: tabular-nums;
 }
 
-.sm { font-size: 13px; display: block; width: 100%; }
+.sm {
+    font-size: 13px;
+    display: block;
+    width: 100%;
+}
 
 .lg {
     display: inline;

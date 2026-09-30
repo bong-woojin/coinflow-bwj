@@ -14,9 +14,7 @@ export function useFlash<T extends HTMLElement>(value: number, direction: Direct
         if (!el) return
 
         const cls =
-            direction === 'down' ? styles.flashDown
-                : direction === 'up' ? styles.flashUp
-                    : null
+            direction === 'down' ? styles.flashDown : direction === 'up' ? styles.flashUp : null
         if (!cls) return
 
         el.classList.remove(styles.flashUp, styles.flashDown)

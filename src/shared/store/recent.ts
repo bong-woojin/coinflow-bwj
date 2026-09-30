@@ -22,6 +22,6 @@ export const useRecent = create<RecentState>()(
                     markets: state.markets.filter((m) => m !== market),
                 })),
         }),
-        { name: 'recent' }
-    )
+        { name: 'recent' },
+    ),
 )

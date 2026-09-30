@@ -23,13 +23,20 @@ type UpbitCandle = {
 
 function candleUrl(market: string, timeframe: Timeframe) {
     switch (timeframe) {
-        case '1m':  return upbitApi.candles('minutes/1', market, 200)
-        case '15m': return upbitApi.candles('minutes/15', market, 200)
-        case '1h':  return upbitApi.candles('minutes/60', market, 200)
-        case '1d':  return upbitApi.candles('days', market, 200)
-        case '1w':  return upbitApi.candles('weeks', market, 200)
-        case '1mo': return upbitApi.candles('months', market, 60)
-        case '1y':  return upbitApi.candles('days', market, 365)
+        case '1m':
+            return upbitApi.candles('minutes/1', market, 200)
+        case '15m':
+            return upbitApi.candles('minutes/15', market, 200)
+        case '1h':
+            return upbitApi.candles('minutes/60', market, 200)
+        case '1d':
+            return upbitApi.candles('days', market, 200)
+        case '1w':
+            return upbitApi.candles('weeks', market, 200)
+        case '1mo':
+            return upbitApi.candles('months', market, 60)
+        case '1y':
+            return upbitApi.candles('days', market, 365)
     }
 }
 
@@ -138,13 +145,16 @@ export default function CandleChart({ market, timeframe = '1m' }: CandleChartPro
         // 볼륨 바는 per-bar 색이므로 저장된 원본 데이터로 재렌더
         const raw = rawCandlesRef.current
         if (raw.length > 0) {
-            const volumes = raw.map((c) => ({
-                time: toTime(c),
-                value: c.candle_acc_trade_volume,
-                color: c.trade_price >= c.opening_price
-                    ? cssVar('--up-volume')
-                    : cssVar('--down-volume'),
-            })).reverse()
+            const volumes = raw
+                .map((c) => ({
+                    time: toTime(c),
+                    value: c.candle_acc_trade_volume,
+                    color:
+                        c.trade_price >= c.opening_price
+                            ? cssVar('--up-volume')
+                            : cssVar('--down-volume'),
+                }))
+                .reverse()
             volume.setData(volumes)
         }
     }, [theme])
@@ -173,21 +183,26 @@ export default function CandleChart({ market, timeframe = '1m' }: CandleChartPro
 
             const isIntraday = timeframe === '1m' || timeframe === '15m' || timeframe === '1h'
 
-            const candles = raw.map((c) => ({
-                time: toTime(c),
-                open: c.opening_price,
-                high: c.high_price,
-                low: c.low_price,
-                close: c.trade_price,
-            })).reverse()
+            const candles = raw
+                .map((c) => ({
+                    time: toTime(c),
+                    open: c.opening_price,
+                    high: c.high_price,
+                    low: c.low_price,
+                    close: c.trade_price,
+                }))
+                .reverse()
 
-            const volumes = raw.map((c) => ({
-                time: toTime(c),
-                value: c.candle_acc_trade_volume,
-                color: c.trade_price >= c.opening_price
-                    ? cssVar('--up-volume')
-                    : cssVar('--down-volume'),
-            })).reverse()
+            const volumes = raw
+                .map((c) => ({
+                    time: toTime(c),
+                    value: c.candle_acc_trade_volume,
+                    color:
+                        c.trade_price >= c.opening_price
+                            ? cssVar('--up-volume')
+                            : cssVar('--down-volume'),
+                }))
+                .reverse()
 
             chartRef.current?.applyOptions({ timeScale: { timeVisible: isIntraday } })
             seriesRef.current?.setData(candles)
@@ -196,7 +211,9 @@ export default function CandleChart({ market, timeframe = '1m' }: CandleChartPro
         }
 
         load()
-        return () => { cancelled = true }
+        return () => {
+            cancelled = true
+        }
     }, [market, timeframe, retryKey])
 
     return (
@@ -205,7 +222,11 @@ export default function CandleChart({ market, timeframe = '1m' }: CandleChartPro
             {failed && (
                 <div className={styles.error}>
                     <p>차트를 불러오지 못했어요</p>
-                    <button type="button" className={styles.retry} onClick={() => setRetryKey((k) => k + 1)}>
+                    <button
+                        type="button"
+                        className={styles.retry}
+                        onClick={() => setRetryKey((k) => k + 1)}
+                    >
                         다시 시도
                     </button>
                 </div>

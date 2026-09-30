@@ -1,12 +1,26 @@
 @keyframes flashUpAnim {
-    0%, 25% { background-color: var(--up-flash); }
-    100%    { background-color: transparent; }
+    0%,
+    25% {
+        background-color: var(--up-flash);
+    }
+    100% {
+        background-color: transparent;
+    }
 }
 
 @keyframes flashDownAnim {
-    0%, 25% { background-color: var(--down-flash); }
-    100%    { background-color: transparent; }
+    0%,
+    25% {
+        background-color: var(--down-flash);
+    }
+    100% {
+        background-color: transparent;
+    }
 }
 
-.flashUp   { animation: flashUpAnim 0.9s ease-out; }
-.flashDown { animation: flashDownAnim 0.9s ease-out; }
+.flashUp {
+    animation: flashUpAnim 0.9s ease-out;
+}
+.flashDown {
+    animation: flashDownAnim 0.9s ease-out;
+}

@@ -10,7 +10,7 @@
     display: flex;
     flex-direction: column;
     flex: 1;
-    justify-content: space-around;   /* 패널 높이에 맞춰 행 간격 자동 */
+    justify-content: space-around; /* 패널 높이에 맞춰 행 간격 자동 */
 }
 
 .row {
@@ -20,7 +20,9 @@
     gap: 12px;
     padding: 8px 0;
 }
-.row + .row { border-top: 1px solid var(--divider); }
+.row + .row {
+    border-top: 1px solid var(--divider);
+}
 
 .meta {
     display: flex;
@@ -64,8 +66,14 @@
     border-radius: 3px;
     transition: width 0.3s ease;
 }
-.bar[data-direction='up']   { left: 50%; background: var(--up); }
-.bar[data-direction='down'] { right: 50%; background: var(--down); }
+.bar[data-direction='up'] {
+    left: 50%;
+    background: var(--up);
+}
+.bar[data-direction='down'] {
+    right: 50%;
+    background: var(--down);
+}
 
 .rate {
     font-size: 14px;

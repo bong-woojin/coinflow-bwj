@@ -71,9 +71,11 @@ export default function ChartPanel({ market }: ChartPanelProps) {
                                     type="button"
                                     role="option"
                                     aria-selected={timeframe === tf.value}
-                                    className={timeframe === tf.value
-                                        ? `${styles.tfDropItem} ${styles.tfDropActive}`
-                                        : styles.tfDropItem}
+                                    className={
+                                        timeframe === tf.value
+                                            ? `${styles.tfDropItem} ${styles.tfDropActive}`
+                                            : styles.tfDropItem
+                                    }
                                     onClick={() => select(tf.value)}
                                 >
                                     {tf.label}
@@ -87,7 +89,11 @@ export default function ChartPanel({ market }: ChartPanelProps) {
                         key={tf.value}
                         type="button"
                         aria-pressed={timeframe === tf.value}
-                        className={timeframe === tf.value ? `${styles.tfBtn} ${styles.tfActive}` : styles.tfBtn}
+                        className={
+                            timeframe === tf.value
+                                ? `${styles.tfBtn} ${styles.tfActive}`
+                                : styles.tfBtn
+                        }
                         onClick={() => select(tf.value)}
                     >
                         {tf.label}

@@ -4,9 +4,9 @@
     height: 100vh;
     grid-template-rows: var(--gnb-h) 1fr 40px;
     grid-template-areas:
-    'gnb'
-    'main'
-    'ticker';
+        'gnb'
+        'main'
+        'ticker';
     padding-right: 56px;
     background: var(--bg);
 }
@@ -84,10 +84,16 @@
     scrollbar-color: var(--scrollbar-thumb) transparent;
 }
 
-.aside::-webkit-scrollbar { width: 8px; }
-.aside::-webkit-scrollbar-button { display: none; }
+.aside::-webkit-scrollbar {
+    width: 8px;
+}
+.aside::-webkit-scrollbar-button {
+    display: none;
+}
 .aside::-webkit-scrollbar-track,
-.aside::-webkit-scrollbar-corner { background: transparent; }
+.aside::-webkit-scrollbar-corner {
+    background: transparent;
+}
 .aside::-webkit-scrollbar-thumb {
     border: 2px solid transparent;
     border-radius: 10px;

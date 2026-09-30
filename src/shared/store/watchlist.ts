@@ -17,6 +17,6 @@ export const useWatchlist = create<WatchlistState>()(
                         : [...state.markets, market],
                 })),
         }),
-        { name: 'watchlist' }
-    )
+        { name: 'watchlist' },
+    ),
 )

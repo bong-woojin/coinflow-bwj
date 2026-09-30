@@ -1,127 +1,126 @@
 .table {
-  --cols: 36px 48px minmax(0, 1.5fr) minmax(0, 0.75fr) minmax(0, 1fr)
-    minmax(0, 1.1fr) minmax(0, 1.1fr) minmax(0, 1.5fr) minmax(0, 1.2fr)
-    minmax(0, 1.2fr);
-  min-width: 0;
+    --cols: 36px 48px minmax(0, 1.5fr) minmax(0, 0.75fr) minmax(0, 1fr) minmax(0, 1.1fr)
+        minmax(0, 1.1fr) minmax(0, 1.5fr) minmax(0, 1.2fr) minmax(0, 1.2fr);
+    min-width: 0;
 }
 
 .header,
 .row {
-  display: grid;
-  grid-template-columns: var(--cols);
-  align-items: center;
-  gap: 8px;
-  padding: 0 16px;
-  min-width: 0;
+    display: grid;
+    grid-template-columns: var(--cols);
+    align-items: center;
+    gap: 8px;
+    padding: 0 16px;
+    min-width: 0;
 }
 
 .header > *,
 .row > * {
-  min-width: 0;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+    min-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 .header {
-  position: sticky;
-  top: 0;
-  z-index: 1;
-  height: 40px;
-  background: var(--surface);
-  font-size: 12px;
-  font-weight: 400;
-  color: var(--text-tertiary);
-  border-top: 1px solid var(--divider);
-  border-bottom: 1px solid var(--divider);
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    height: 40px;
+    background: var(--surface);
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--text-tertiary);
+    border-top: 1px solid var(--divider);
+    border-bottom: 1px solid var(--divider);
 }
 
 .header > *:nth-child(n + 2) {
-  text-align: right;
+    text-align: right;
 }
 
 .rankHead {
-  grid-column: 1 / span 3;
-  text-align: left;
-  font-weight: 500;
-  color: var(--text-secondary);
+    grid-column: 1 / span 3;
+    text-align: left;
+    font-weight: 500;
+    color: var(--text-secondary);
 }
 
 .row {
-  height: 44px;
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--text-primary);
-  cursor: pointer;
-  border-bottom: 1px solid var(--divider);
+    height: 44px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary);
+    cursor: pointer;
+    border-bottom: 1px solid var(--divider);
 }
 
 .row:last-child {
-  border-bottom: none;
+    border-bottom: none;
 }
 
 .row:hover {
-  background: var(--fill-subtle);
+    background: var(--fill-subtle);
 }
 
 .row > *:nth-child(n + 4) {
-  text-align: right;
+    text-align: right;
 }
 
 .row a {
-  color: inherit;
+    color: inherit;
 }
 
 .row a:focus-visible {
-  outline: 2px solid var(--brand);
-  outline-offset: 2px;
+    outline: 2px solid var(--brand);
+    outline-offset: 2px;
 }
 
 .coin {
-  display: flex;
-  align-items: center;
-  min-width: 0;
-  overflow: hidden;
+    display: flex;
+    align-items: center;
+    min-width: 0;
+    overflow: hidden;
 }
 
 .coinLink {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  min-width: 0;
-  overflow: hidden;
-  width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+    overflow: hidden;
+    width: 100%;
 }
 
 .coinSymbol {
-  font-size: 10px;
-  color: var(--text-tertiary);
-  font-weight: 500;
-  flex-shrink: 0;
+    font-size: 10px;
+    color: var(--text-tertiary);
+    font-weight: 500;
+    flex-shrink: 0;
 }
 
 .rangeCell {
-  text-align: left;
+    text-align: left;
 }
 
 .row > .rateCell {
-  align-self: stretch;
-  justify-self: end;
-  width: 50%;
-  min-width: max-content;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  margin: 6px 0;
-  padding: 0 8px;
-  border-radius: 6px;
+    align-self: stretch;
+    justify-self: end;
+    width: 50%;
+    min-width: max-content;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin: 6px 0;
+    padding: 0 8px;
+    border-radius: 6px;
 }
 
 .header .rateHead {
-  padding-right: 8px;
+    padding-right: 8px;
 }
 
 .header .rangeHead {
-  text-align: right;
-  padding-right: 20%;
+    text-align: right;
+    padding-right: 20%;
 }

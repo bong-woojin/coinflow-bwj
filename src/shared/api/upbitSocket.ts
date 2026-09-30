@@ -1,4 +1,9 @@
-import type { UpbitSocketMessage, UpbitSocketNotice, UpbitSocketTicker, UpbitSocketTrade } from '../types'
+import type {
+    UpbitSocketMessage,
+    UpbitSocketNotice,
+    UpbitSocketTicker,
+    UpbitSocketTrade,
+} from '../types'
 import { UPBIT_WS_URL } from './upbitApi'
 
 // 업비트는 웹사이트 Origin으로 들어온 브라우저 소켓을 동시에 1개 정도만 허용하므로,
@@ -9,8 +14,8 @@ type Subscription<T> = {
     onMessage: (data: T) => void
 }
 
-const RESEND_DELAY = 50         // 같은 순간의 구독 변경을 모아서 한 번에 전송
-const IDLE_CLOSE_DELAY = 1000   // 구독이 모두 사라져도 잠깐 유지 (페이지 이동·StrictMode 재구독 대비)
+const RESEND_DELAY = 50 // 같은 순간의 구독 변경을 모아서 한 번에 전송
+const IDLE_CLOSE_DELAY = 1000 // 구독이 모두 사라져도 잠깐 유지 (페이지 이동·StrictMode 재구독 대비)
 const PING_INTERVAL = 60_000
 const MAX_RECONNECT_DELAY = 30_000
 
@@ -59,7 +64,7 @@ function dispatch<T extends UpbitSocketMessage>(subs: Set<Subscription<T>>, data
 
 function connect() {
     clearTimeout(reconnectTimer)
-    if (subCount() === 0) return            // 재연결 예약 뒤 구독이 모두 해제된 경우 — 구독 0개짜리 소켓을 열지 않음
+    if (subCount() === 0) return // 재연결 예약 뒤 구독이 모두 해제된 경우 — 구독 0개짜리 소켓을 열지 않음
     const socket = new WebSocket(UPBIT_WS_URL)
     socket.binaryType = 'arraybuffer'
     ws = socket
@@ -73,8 +78,10 @@ function connect() {
     }
 
     socket.onmessage = (event) => {
-        const data = parseUpbitJson<UpbitSocketMessage | UpbitSocketNotice>(new TextDecoder().decode(event.data))
-        if (!('type' in data)) return       // PING 응답·요청 오류 등 시세가 아닌 메시지
+        const data = parseUpbitJson<UpbitSocketMessage | UpbitSocketNotice>(
+            new TextDecoder().decode(event.data),
+        )
+        if (!('type' in data)) return // PING 응답·요청 오류 등 시세가 아닌 메시지
         if (data.type === 'ticker') dispatch(tickerSubs, data)
         else dispatch(tradeSubs, data)
     }
@@ -82,7 +89,7 @@ function connect() {
     // 연결 거부(429 등) 시 error만 오고 close가 안 오는 경우가 있어 둘 다에서 처리 (한 번만)
     const handleDown = () => {
         clearInterval(pingTimer)
-        if (ws !== socket) return           // 의도적으로 닫았거나 이미 처리한 연결
+        if (ws !== socket) return // 의도적으로 닫았거나 이미 처리한 연결
         ws = null
         if (subCount() === 0) return
         reconnectTimer = setTimeout(connect, reconnectDelay)
@@ -100,7 +107,7 @@ function closeWhenIdle() {
         clearTimeout(reconnectTimer)
         if (!ws) return
         const socket = ws
-        ws = null                           // handleDown이 '의도적 종료'로 보고 재연결하지 않도록 먼저 비움
+        ws = null // handleDown이 '의도적 종료'로 보고 재연결하지 않도록 먼저 비움
         socket.close()
     }, IDLE_CLOSE_DELAY)
 }

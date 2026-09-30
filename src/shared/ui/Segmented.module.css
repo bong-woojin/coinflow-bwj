@@ -12,9 +12,13 @@
     font-size: 13px;
     font-weight: 500;
     color: var(--text-tertiary);
-    transition: background 0.15s, color 0.15s;
+    transition:
+        background 0.15s,
+        color 0.15s;
 }
-.item:hover { color: var(--text-secondary); }
+.item:hover {
+    color: var(--text-secondary);
+}
 
 .item[aria-selected='true'] {
     background: var(--surface);
@@ -22,8 +26,12 @@
     font-weight: 600;
     box-shadow: var(--shadow-segment);
 }
-.item[aria-selected='true'][data-tone='up']   { color: var(--up); }
-.item[aria-selected='true'][data-tone='down'] { color: var(--down); }
+.item[aria-selected='true'][data-tone='up'] {
+    color: var(--up);
+}
+.item[aria-selected='true'][data-tone='down'] {
+    color: var(--down);
+}
 
 .item:focus-visible {
     outline: 2px solid var(--brand);

@@ -6,9 +6,5 @@ type ChangeRateProps = {
 }
 
 export default function ChangeRate({ rate }: ChangeRateProps) {
-    return (
-        <span className={dir[getDirection(rate)]}>
-      {formatChangeRate(rate)}
-    </span>
-    )
+    return <span className={dir[getDirection(rate)]}>{formatChangeRate(rate)}</span>
 }

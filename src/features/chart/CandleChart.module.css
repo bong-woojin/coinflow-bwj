@@ -29,4 +29,6 @@
     font-size: 13px;
     font-weight: 600;
 }
-.retry:hover { background: var(--divider); }
+.retry:hover {
+    background: var(--divider);
+}

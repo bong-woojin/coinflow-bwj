@@ -14,10 +14,10 @@ export default function MarketBreadth() {
             <div className={styles.head}>
                 <span className={styles.title}>상승 · 하락</span>
                 <span className={styles.counts}>
-          <b className={styles.countUp}>{up}</b>
-          <span className={styles.slash}>/</span>
-          <b className={styles.countDown}>{down}</b>
-        </span>
+                    <b className={styles.countUp}>{up}</b>
+                    <span className={styles.slash}>/</span>
+                    <b className={styles.countDown}>{down}</b>
+                </span>
             </div>
 
             <div

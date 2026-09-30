@@ -5,7 +5,10 @@
     min-height: 0;
 }
 
-.loading { padding: 24px; color: var(--text-secondary); }
+.loading {
+    padding: 24px;
+    color: var(--text-secondary);
+}
 
 /* ── 본문 ── */
 .body {
@@ -23,8 +26,18 @@
     background: var(--bg);
 }
 
-.chartArea  { grid-area: chart; }
-.returnsArea { grid-area: returns; }
-.quotesArea { grid-area: quotes; }
-.flowArea   { grid-area: flow; }
-.infoArea   { grid-area: info; }
+.chartArea {
+    grid-area: chart;
+}
+.returnsArea {
+    grid-area: returns;
+}
+.quotesArea {
+    grid-area: quotes;
+}
+.flowArea {
+    grid-area: flow;
+}
+.infoArea {
+    grid-area: info;
+}

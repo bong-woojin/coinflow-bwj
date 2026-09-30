@@ -1,4 +1,9 @@
-import { formatChangeRate, formatPrice, getDirection, formatShortDate } from '../../shared/lib/format'
+import {
+    formatChangeRate,
+    formatPrice,
+    getDirection,
+    formatShortDate,
+} from '../../shared/lib/format'
 import { usePeriodBases } from './usePeriodBases'
 import styles from './ReturnsPanel.module.css'
 import dir from '../../shared/styles/direction.module.css'
@@ -46,7 +51,9 @@ export default function ReturnsPanel({ market, currentPrice }: ReturnsPanelProps
                     )
                 })}
             </ul>
-            <p className={styles.note}>기준 가격 대비 현재가 등락률 · 1년은 52주 전 주봉 시가 기준</p>
+            <p className={styles.note}>
+                기준 가격 대비 현재가 등락률 · 1년은 52주 전 주봉 시가 기준
+            </p>
         </div>
     )
 }

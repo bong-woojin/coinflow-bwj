@@ -4,7 +4,8 @@
 const UPBIT = 'https://api.upbit.com/v1'
 
 // 이 앱이 쓰는 경로만 허용 (열린 프록시 방지)
-const ALLOWED = /^(market\/all|ticker|trades\/ticks|candles\/(minutes\/(1|15|60)|days|weeks|months))$/
+const ALLOWED =
+    /^(market\/all|ticker|trades\/ticks|candles\/(minutes\/(1|15|60)|days|weeks|months))$/
 
 export async function GET(request: Request) {
     const url = new URL(request.url)
@@ -21,13 +22,17 @@ export async function GET(request: Request) {
         })
     } catch {
         // 업비트 연결 실패 → 502로 응답해 클라이언트(fetchUpbit)가 재시도하게 함
-        return new Response('Upstream error', { status: 502, headers: { 'cache-control': 'no-store' } })
+        return new Response('Upstream error', {
+            status: 502,
+            headers: { 'cache-control': 'no-store' },
+        })
     }
 
     // 마켓 목록은 거의 안 바뀌므로 1시간, 시세·캔들은 1초만 엣지 캐시
-    const cache = path === 'market/all'
-        ? 'public, s-maxage=3600, stale-while-revalidate=86400'
-        : 'public, s-maxage=1, stale-while-revalidate=5'
+    const cache =
+        path === 'market/all'
+            ? 'public, s-maxage=3600, stale-while-revalidate=86400'
+            : 'public, s-maxage=1, stale-while-revalidate=5'
 
     return new Response(res.body, {
         status: res.status,
