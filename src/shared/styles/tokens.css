@@ -14,6 +14,17 @@
     --gnb-h:         52px;
     --aside-w:       310px;
     --radius:        12px;
+    --radius-lg:     16px;
+
+    /* 차트 볼륨 바 색 — hex concat 없이 안전하게 사용 */
+    --up-volume:     rgba(222, 43, 57, 0.6);
+    --down-volume:   rgba(34, 114, 235, 0.6);
+
+    /* 백드롭 · 그림자 — 다크에서 별도 정의 */
+    --backdrop-bg:      rgba(0, 0, 0, 0.20);
+    --shadow-modal:     0 12px 40px rgba(0, 0, 0, 0.16);
+    --shadow-dropdown:  0 4px 12px rgba(0, 0, 0, 0.12);
+    --shadow-segment:   0 1px 3px rgba(0, 0, 0, 0.08);
 }
 
 [data-theme='dark'] {
@@ -28,6 +39,14 @@
     --up:            #F5445A;
     --down:          #4391FF;
     --brand:         #3182F6;
+
+    --up-volume:     rgba(245, 68, 90, 0.6);
+    --down-volume:   rgba(67, 145, 255, 0.6);
+
+    --backdrop-bg:      rgba(0, 0, 0, 0.55);
+    --shadow-modal:     0 12px 40px rgba(0, 0, 0, 0.55);
+    --shadow-dropdown:  0 4px 12px rgba(0, 0, 0, 0.45);
+    --shadow-segment:   0 1px 4px rgba(0, 0, 0, 0.35);
 }
 
 :root {

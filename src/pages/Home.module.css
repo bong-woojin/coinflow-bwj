@@ -3,7 +3,7 @@
   min-width: 1100px;
   min-height: 0;
   background: var(--surface);
-  border-radius: 16px;
+  border-radius: var(--radius-lg);
   overflow-x: hidden;
   overflow-y: auto;
   scrollbar-width: thin;
@@ -12,7 +12,7 @@
 }
 
 .panel[data-scrolling="true"] {
-  scrollbar-color: rgba(120, 130, 145, 0.45) transparent;
+  scrollbar-color: var(--scrollbar-thumb) transparent;
   transition: scrollbar-color 0.15s ease;
 }
 

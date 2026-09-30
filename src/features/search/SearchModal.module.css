@@ -6,7 +6,7 @@
     justify-content: center;
     align-items: flex-start;
     padding: 0 16px;
-    background: rgba(0, 0, 0, 0.2);
+    background: var(--backdrop-bg);
     animation: fade 0.12s ease-out;
 }
 
@@ -19,7 +19,7 @@
     margin-top: 8px;
     border-radius: 16px;
     background: var(--surface);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.16);
+    box-shadow: var(--shadow-modal);
     overflow: hidden;
     animation: drop 0.16s ease-out;
 }

@@ -3,6 +3,7 @@ import { createChart, CandlestickSeries, HistogramSeries, ColorType } from 'ligh
 import type { IChartApi, ISeriesApi, UTCTimestamp } from 'lightweight-charts'
 import styles from './CandleChart.module.css'
 import { fetchUpbit, upbitApi } from '../../shared/api/upbitApi'
+import { useUi } from '../../shared/store/ui'
 
 export type Timeframe = '1m' | '15m' | '1h' | '1d' | '1w' | '1mo' | '1y'
 
@@ -36,14 +37,21 @@ function cssVar(name: string) {
     return getComputedStyle(document.documentElement).getPropertyValue(name).trim()
 }
 
+const toTime = (c: UpbitCandle) =>
+    (new Date(c.candle_date_time_kst + 'Z').getTime() / 1000) as UTCTimestamp
+
 export default function CandleChart({ market, timeframe = '1m' }: CandleChartProps) {
     const containerRef = useRef<HTMLDivElement>(null)
     const chartRef = useRef<IChartApi | null>(null)
     const seriesRef = useRef<ISeriesApi<'Candlestick'> | null>(null)
     const volumeRef = useRef<ISeriesApi<'Histogram'> | null>(null)
+    const rawCandlesRef = useRef<UpbitCandle[]>([])
     const [failed, setFailed] = useState(false)
     const [retryKey, setRetryKey] = useState(0)
 
+    const theme = useUi((s) => s.theme)
+
+    // 차트 인스턴스 생성 — 마운트 1회
     useEffect(() => {
         const el = containerRef.current
         if (!el) return
@@ -103,6 +111,45 @@ export default function CandleChart({ market, timeframe = '1m' }: CandleChartPro
         }
     }, [])
 
+    // 테마 변경 시 색상 갱신 — 차트 재생성 없이 applyOptions
+    useEffect(() => {
+        const chart = chartRef.current
+        const series = seriesRef.current
+        const volume = volumeRef.current
+        if (!chart || !series || !volume) return
+
+        chart.applyOptions({
+            layout: { textColor: cssVar('--text-secondary') },
+            grid: {
+                vertLines: { color: cssVar('--fill-subtle') },
+                horzLines: { color: cssVar('--fill-subtle') },
+            },
+        })
+
+        series.applyOptions({
+            upColor: cssVar('--up'),
+            downColor: cssVar('--down'),
+            borderUpColor: cssVar('--up'),
+            borderDownColor: cssVar('--down'),
+            wickUpColor: cssVar('--up'),
+            wickDownColor: cssVar('--down'),
+        })
+
+        // 볼륨 바는 per-bar 색이므로 저장된 원본 데이터로 재렌더
+        const raw = rawCandlesRef.current
+        if (raw.length > 0) {
+            const volumes = raw.map((c) => ({
+                time: toTime(c),
+                value: c.candle_acc_trade_volume,
+                color: c.trade_price >= c.opening_price
+                    ? cssVar('--up-volume')
+                    : cssVar('--down-volume'),
+            })).reverse()
+            volume.setData(volumes)
+        }
+    }, [theme])
+
+    // 데이터 로드
     useEffect(() => {
         let cancelled = false
 
@@ -114,7 +161,6 @@ export default function CandleChart({ market, timeframe = '1m' }: CandleChartPro
                 raw = await res.json()
             } catch {
                 if (cancelled) return
-                // 이전 코인/기간 차트가 남아 보이지 않도록 비움
                 seriesRef.current?.setData([])
                 volumeRef.current?.setData([])
                 setFailed(true)
@@ -123,10 +169,9 @@ export default function CandleChart({ market, timeframe = '1m' }: CandleChartPro
             if (cancelled) return
             setFailed(false)
 
+            rawCandlesRef.current = raw
+
             const isIntraday = timeframe === '1m' || timeframe === '15m' || timeframe === '1h'
-            // 업비트 시각 문자열엔 오프셋이 없어 그대로 파싱하면 로컬 시간이 됨 → KST 시각에 'Z'를 붙여
-            // UTC로 표시하는 차트에 KST 벽시계 시각이 그대로 찍히게 함 (일봉을 utc로 파싱하면 하루 밀림)
-            const toTime = (c: UpbitCandle) => (new Date(c.candle_date_time_kst + 'Z').getTime() / 1000) as UTCTimestamp
 
             const candles = raw.map((c) => ({
                 time: toTime(c),
@@ -140,8 +185,8 @@ export default function CandleChart({ market, timeframe = '1m' }: CandleChartPro
                 time: toTime(c),
                 value: c.candle_acc_trade_volume,
                 color: c.trade_price >= c.opening_price
-                    ? cssVar('--up') + '99'
-                    : cssVar('--down') + '99',
+                    ? cssVar('--up-volume')
+                    : cssVar('--down-volume'),
             })).reverse()
 
             chartRef.current?.applyOptions({ timeScale: { timeVisible: isIntraday } })

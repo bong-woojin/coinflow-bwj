@@ -1,21 +1,18 @@
-import { useEffect, useState } from 'react'
+import { useUi } from '../store/ui'
 
 export default function ThemeToggle() {
-    const [theme, setTheme] = useState<'light' | 'dark'>('light')
-
-    useEffect(() => {
-        document.documentElement.dataset.theme = theme
-    }, [theme])
-
-    function handleClick() {
-        setTheme(theme === 'light' ? 'dark' : 'light')
-    }
+    const theme = useUi((s) => s.theme)
+    const setTheme = useUi((s) => s.setTheme)
 
     return (
-        <button type="button" onClick={handleClick} aria-label={theme === 'dark' ? '라이트 모드로 전환' : '다크 모드로 전환'}>
+        <button
+            type="button"
+            onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
+            aria-label={theme === 'dark' ? '라이트 모드로 전환' : '다크 모드로 전환'}
+        >
             {theme === 'light' ? (
                 <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="20" height="20">
-                    <g fill="#aab1bc">
+                    <g fill="currentColor">
                         <path d="m12 23.677c-.696 0-1.26-.563-1.26-1.26v-1.445c0-.696.564-1.26 1.26-1.26s1.26.563 1.26 1.26v1.445c0 .696-.564 1.26-1.26 1.26z" />
                         <path d="m12 4.271c-.696 0-1.26-.563-1.26-1.26v-1.427c0-.696.564-1.26 1.26-1.26s1.26.563 1.26 1.26v1.427c0 .696-.564 1.26-1.26 1.26z" />
                         <circle cx="12" cy="11.997" r="6.024" />
@@ -29,7 +26,7 @@ export default function ThemeToggle() {
                 </svg>
             ) : (
                 <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="20" height="20">
-                    <path d="m8.87 2.46c-.42 1.55-.49 3.24-.09 5 .87 3.83 3.94 6.89 7.77 7.77 1.76.4 3.45.33 5-.09.42-.11.78.33.58.71-1.92 3.66-5.95 6.04-10.48 5.48-4.63-.57-8.39-4.33-8.96-8.96-.57-4.54 1.81-8.57 5.47-10.49a.5.5 0 0 1 .71.58z" fill="#a6b0ba" />
+                    <path d="m8.87 2.46c-.42 1.55-.49 3.24-.09 5 .87 3.83 3.94 6.89 7.77 7.77 1.76.4 3.45.33 5-.09.42-.11.78.33.58.71-1.92 3.66-5.95 6.04-10.48 5.48-4.63-.57-8.39-4.33-8.96-8.96-.57-4.54 1.81-8.57 5.47-10.49a.5.5 0 0 1 .71.58z" fill="currentColor" />
                 </svg>
             )}
         </button>

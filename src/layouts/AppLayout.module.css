@@ -81,5 +81,20 @@
 }
 
 .aside[data-scrolling='true'] {
-    scrollbar-color: rgba(120, 130, 145, 0.45) transparent;
+    scrollbar-color: var(--scrollbar-thumb) transparent;
+}
+
+.aside::-webkit-scrollbar { width: 8px; }
+.aside::-webkit-scrollbar-button { display: none; }
+.aside::-webkit-scrollbar-track,
+.aside::-webkit-scrollbar-corner { background: transparent; }
+.aside::-webkit-scrollbar-thumb {
+    border: 2px solid transparent;
+    border-radius: 10px;
+    background-color: transparent;
+    background-clip: padding-box;
+    transition: background-color 0.3s;
+}
+.aside[data-scrolling='true']::-webkit-scrollbar-thumb {
+    background-color: var(--scrollbar-thumb);
 }
