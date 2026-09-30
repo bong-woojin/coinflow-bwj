@@ -2,6 +2,7 @@ export type Ticker = {
     market: string
     koreanName: string
     tradePrice: number
+    prevClosingPrice: number
     changeRate: number
     accTradePrice24h: number
     highPrice: number

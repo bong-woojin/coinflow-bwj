@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { memo } from 'react'
 import { Link } from 'react-router-dom'
 import { useMarketStore } from '../../shared/store/market'
 import { formatTradePrice } from '../../shared/lib/format'
@@ -15,31 +15,42 @@ const FEATURED = [
     { market: 'KRW-DOGE', label: '도지코인' },
 ]
 
+type FeaturedItemProps = {
+    market: string
+    label: string
+}
+
+// 자기 코인 시세만 구독 → 그 코인이 바뀔 때만 리렌더
+const FeaturedItem = memo(function FeaturedItem({ market, label }: FeaturedItemProps) {
+    const live = useMarketStore((s) => s.liveMap[market])
+
+    return (
+        <li>
+            <Link to={`/coins/${market}`} className={styles.item}>
+                <span className={styles.label}>{label}</span>
+                {live ? (
+                    <>
+                        <Price value={live.trade_price} />
+                        <ChangeRate rate={live.signed_change_rate} />
+                    </>
+                ) : (
+                    <span className={styles.label}>–</span>
+                )}
+            </Link>
+        </li>
+    )
+})
+
 export default function TickerBar() {
-    const tickers = useMarketStore((s) => s.tickers)
-    const liveMap = useMarketStore((s) => s.liveMap)
-
-    const { totalVolume, upCount, downCount } = useMemo(() => {
-        let totalVolume = 0
-        let upCount = 0
-        let downCount = 0
-
-        for (const t of tickers) {
-            const live = liveMap[t.market]
-            totalVolume += live?.acc_trade_price_24h ?? t.accTradePrice24h
-            const rate = live?.signed_change_rate ?? t.changeRate
-            if (rate > 0) upCount += 1
-            else if (rate < 0) downCount += 1
-        }
-
-        return { totalVolume, upCount, downCount }
-    }, [tickers, liveMap])
+    const totalTradePrice = useMarketStore((s) => s.totalTradePrice)
+    const upCount = useMarketStore((s) => s.upCount)
+    const downCount = useMarketStore((s) => s.downCount)
 
     return (
         <ul className={styles.list}>
             <li className={styles.stat}>
                 <span className={styles.label}>전체 거래대금</span>
-                <span>{formatTradePrice(totalVolume)}</span>
+                <span>{formatTradePrice(totalTradePrice)}</span>
             </li>
 
             <li className={styles.stat}>
@@ -51,24 +62,9 @@ export default function TickerBar() {
 
             <li className={styles.divider} aria-hidden="true" />
 
-            {FEATURED.map(({ market, label }) => {
-                const live = liveMap[market]
-                return (
-                    <li key={market}>
-                        <Link to={`/coins/${market}`} className={styles.item}>
-                            <span className={styles.label}>{label}</span>
-                            {live ? (
-                                <>
-                                    <Price value={live.trade_price} />
-                                    <ChangeRate rate={live.signed_change_rate} />
-                                </>
-                            ) : (
-                                <span className={styles.label}>–</span>
-                            )}
-                        </Link>
-                    </li>
-                )
-            })}
+            {FEATURED.map(({ market, label }) => (
+                <FeaturedItem key={market} market={market} label={label} />
+            ))}
         </ul>
     )
 }

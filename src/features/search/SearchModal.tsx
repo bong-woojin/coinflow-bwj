@@ -28,8 +28,6 @@ type Section = {
 export default function SearchModal() {
     const navigate = useNavigate()
     const closeSearch = useUi((s) => s.closeSearch)
-    const tickers = useMarketStore((s) => s.tickers)
-    const liveMap = useMarketStore((s) => s.liveMap)
     const snapshotAt = useMarketStore((s) => s.snapshotAt)
 
     const [query, setQuery] = useState('')
@@ -37,21 +35,20 @@ export default function SearchModal() {
     const inputRef = useRef<HTMLInputElement>(null)
     const listRef = useRef<HTMLDivElement>(null)
 
-    // 스냅샷 + 실시간 값을 합친 검색용 목록
-    const items = useMemo<Item[]>(
-        () =>
-            tickers.map((t) => {
-                const live = liveMap[t.market]
-                return {
-                    market: t.market,
-                    koreanName: t.koreanName,
-                    symbol: toSymbol(t.market),
-                    changeRate: live?.signed_change_rate ?? t.changeRate,
-                    tradeAmount: live?.acc_trade_price_24h ?? t.accTradePrice24h,
-                }
-            }),
-        [tickers, liveMap]
-    )
+    // 열릴 때 한 번만 스냅샷 (getState는 구독하지 않음) — 200ms마다 재정렬돼 클릭하려던 항목이 바뀌는 것 방지
+    const [items] = useState<Item[]>(() => {
+        const { tickers, liveMap } = useMarketStore.getState()
+        return tickers.map((t) => {
+            const live = liveMap[t.market]
+            return {
+                market: t.market,
+                koreanName: t.koreanName,
+                symbol: toSymbol(t.market),
+                changeRate: live?.signed_change_rate ?? t.changeRate,
+                tradeAmount: live?.acc_trade_price_24h ?? t.accTradePrice24h,
+            }
+        })
+    })
 
     const keyword = query.trim().toLowerCase()
 

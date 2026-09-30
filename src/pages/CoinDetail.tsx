@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
-import { useUpbitTicker } from '../shared/api/useUpbitTicker'
+import { useMarketStore } from '../shared/store/market'
 import { toSymbol } from '../shared/lib/format'
 import type { UpbitMarket, UpbitTicker } from '../shared/types'
 import styles from './CoinDetail.module.css'
@@ -24,7 +24,8 @@ export default function CoinDetail() {
     const [isLoading, setIsLoading] = useState(true)
     const [error, setError] = useState<string | null>(null)
 
-    const { liveMap } = useUpbitTicker(market ? [market] : [])
+    // 목록과 같은 200ms 배칭 스토어에서 이 코인만 구독 → 이 코인이 바뀐 배치에서만 리렌더
+    const live = useMarketStore((s) => (market ? s.liveMap[market] : undefined))
     const trades = useUpbitTrades(market)
     const visit = useRecent((s) => s.visit)
 
@@ -71,7 +72,6 @@ export default function CoinDetail() {
     if (error) return <div className={styles.loading}>{error}</div>
     if (!snapshot || !market) return <div className={styles.loading}>코인을 찾을 수 없습니다</div>
 
-    const live = liveMap[market]
     const tradePrice = live?.trade_price ?? snapshot.trade_price
 
     return (

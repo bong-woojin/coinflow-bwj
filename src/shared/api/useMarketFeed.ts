@@ -41,6 +41,7 @@ export function useMarketFeed() {
                         market: t.market,
                         koreanName: nameMap.get(t.market) ?? t.market,
                         tradePrice: t.trade_price,
+                        prevClosingPrice: t.prev_closing_price,
                         changeRate: t.signed_change_rate,
                         accTradePrice24h: t.acc_trade_price_24h,
                         highPrice: t.high_price,
