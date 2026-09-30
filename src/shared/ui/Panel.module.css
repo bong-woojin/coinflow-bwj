@@ -39,4 +39,6 @@
     flex: 1;
     min-height: 0;
     overflow-y: auto;
+    /* 트랙만 투명 — 기본 스크롤바를 유지해 위아래 화살표는 남김 */
+    scrollbar-color: var(--scrollbar-thumb) transparent;
 }
