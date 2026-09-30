@@ -25,11 +25,19 @@ export default function QuotesPanel({ market, trades, prevClose }: QuotesPanelPr
     return (
         <>
             <div className={styles.toolbar}>
-                <Segmented options={MODES} value={mode} onChange={setMode} ariaLabel="시세 보기 방식" />
+                <Segmented
+                    id="quotes"
+                    options={MODES}
+                    value={mode}
+                    onChange={setMode}
+                    ariaLabel="시세 보기 방식"
+                />
             </div>
-            {mode === 'live'
-                ? <TradeList trades={trades} prevClose={prevClose} />
-                : <DailyList market={market} />}
+            <div id={`quotes-panel-${mode}`} role="tabpanel" aria-labelledby={`quotes-${mode}`}>
+                {mode === 'live'
+                    ? <TradeList trades={trades} prevClose={prevClose} />
+                    : <DailyList market={market} />}
+            </div>
         </>
     )
 }

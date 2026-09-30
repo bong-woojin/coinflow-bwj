@@ -16,6 +16,7 @@ export default function Home() {
 
     return (
         <div ref={scrollRef} className={styles.panel}>
+            <h1 className="srOnly">KRW 마켓 실시간 시세</h1>
             <MarketSummary />
             <MarketTable tickers={tickers} snapshotAt={snapshotAt} />
         </div>

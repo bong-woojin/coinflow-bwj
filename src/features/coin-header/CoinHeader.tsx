@@ -30,10 +30,10 @@ export default function CoinHeader({ market, koreanName, snapshot, live }: CoinH
             <div className={styles.headerLeft}>
                 <div className={styles.coinNameRow}>
                     <CoinLogo symbol={symbol} size={20} />
-                    <p className={styles.coinName}>
+                    <h1 className={styles.coinName}>
                         {koreanName}
                         <span className={styles.symbol}>{symbol}</span>
-                    </p>
+                    </h1>
                 </div>
                 <p className={styles.priceRow}>
                     <span className={styles.price}>{formatPrice(tradePrice)}원</span>

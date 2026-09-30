@@ -1,5 +1,5 @@
 import { memo } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useMarketStore } from '../../shared/store/market'
 import { formatPrice, formatTradePrice, formatCoinVolume, getDirection, toSymbol } from '../../shared/lib/format'
 import { useFlash } from './useFlash'
@@ -45,9 +45,11 @@ function MarketRow({market, koreanName, rank, fallbackPrice, fallbackRate, fallb
             <span role="cell"><WatchButton market={market} /></span>
             <span role="cell">{rank}</span>
             <span className={styles.coin} role="cell">
-                <CoinLogo symbol={toSymbol(market)} />
-                {koreanName}
-                <span className={styles.coinSymbol}>{toSymbol(market)}</span>
+                <Link to={`/coins/${market}`} className={styles.coinLink}>
+                    <CoinLogo symbol={toSymbol(market)} />
+                    {koreanName}
+                    <span className={styles.coinSymbol}>{toSymbol(market)}</span>
+                </Link>
             </span>
             <span role="cell">
                 <Price value={tradePrice} />

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import CandleChart, { type Timeframe } from './CandleChart'
 import styles from './ChartPanel.module.css'
 
@@ -23,6 +23,7 @@ type ChartPanelProps = {
 export default function ChartPanel({ market }: ChartPanelProps) {
     const [timeframe, setTimeframe] = useState<Timeframe>('1m')
     const [minOpen, setMinOpen] = useState(false)
+    const dropdownRef = useRef<HTMLDivElement>(null)
 
     const select = (tf: Timeframe) => {
         setTimeframe(tf)
@@ -31,22 +32,45 @@ export default function ChartPanel({ market }: ChartPanelProps) {
 
     const minActive = MIN_FRAMES.some((f) => f.value === timeframe)
 
+    // 바깥 클릭 · Escape 로 드롭다운 닫기
+    useEffect(() => {
+        if (!minOpen) return
+        const onMouse = (e: MouseEvent) => {
+            if (!dropdownRef.current?.contains(e.target as Node)) setMinOpen(false)
+        }
+        const onKey = (e: KeyboardEvent) => {
+            if (e.key === 'Escape') setMinOpen(false)
+        }
+        document.addEventListener('mousedown', onMouse)
+        document.addEventListener('keydown', onKey)
+        return () => {
+            document.removeEventListener('mousedown', onMouse)
+            document.removeEventListener('keydown', onKey)
+        }
+    }, [minOpen])
+
     return (
         <>
             <div className={styles.timeframeTabs}>
-                <div className={styles.tfGroup}>
+                <div ref={dropdownRef} className={styles.tfGroup}>
                     <button
+                        type="button"
                         className={minActive ? `${styles.tfBtn} ${styles.tfActive}` : styles.tfBtn}
+                        aria-expanded={minOpen}
+                        aria-haspopup="listbox"
                         onClick={() => setMinOpen((o) => !o)}
                     >
                         {MIN_FRAMES.find((f) => f.value === timeframe)?.label ?? '분'}
                         <span className={styles.tfArrow}>{minOpen ? '▲' : '▼'}</span>
                     </button>
                     {minOpen && (
-                        <div className={styles.tfDropdown}>
+                        <div className={styles.tfDropdown} role="listbox" aria-label="분봉 선택">
                             {MIN_FRAMES.map((tf) => (
                                 <button
                                     key={tf.value}
+                                    type="button"
+                                    role="option"
+                                    aria-selected={timeframe === tf.value}
                                     className={timeframe === tf.value
                                         ? `${styles.tfDropItem} ${styles.tfDropActive}`
                                         : styles.tfDropItem}
@@ -61,6 +85,8 @@ export default function ChartPanel({ market }: ChartPanelProps) {
                 {DAY_FRAMES.map((tf) => (
                     <button
                         key={tf.value}
+                        type="button"
+                        aria-pressed={timeframe === tf.value}
                         className={timeframe === tf.value ? `${styles.tfBtn} ${styles.tfActive}` : styles.tfBtn}
                         onClick={() => select(tf.value)}
                     >

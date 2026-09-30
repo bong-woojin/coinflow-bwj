@@ -80,9 +80,17 @@
 .coin {
   display: flex;
   align-items: center;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.coinLink {
+  display: flex;
+  align-items: center;
   gap: 8px;
   min-width: 0;
   overflow: hidden;
+  width: 100%;
 }
 
 .coinSymbol {

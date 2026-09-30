@@ -31,7 +31,7 @@ export default function AppLayout() {
                 ref={asideRef}
                 className={styles.aside}
                 id="aside-panel"
-                aria-hidden={!asideOpen}
+                inert={!asideOpen}
             >
                 {sidebarTab === 'watchlist' ? <WatchlistSidebar /> : <RecentSidebar />}
             </aside>

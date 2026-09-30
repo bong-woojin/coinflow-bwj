@@ -25,6 +25,8 @@ type Section = {
     items: Item[]
 }
 
+const FOCUSABLE = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+
 export default function SearchModal() {
     const navigate = useNavigate()
     const closeSearch = useUi((s) => s.closeSearch)
@@ -34,6 +36,8 @@ export default function SearchModal() {
     const [activeIndex, setActiveIndex] = useState(0)
     const inputRef = useRef<HTMLInputElement>(null)
     const listRef = useRef<HTMLDivElement>(null)
+    const modalRef = useRef<HTMLDivElement>(null)
+    const prevFocusRef = useRef<Element | null>(null)
 
     // 열릴 때 한 번만 스냅샷 (getState는 구독하지 않음) — 200ms마다 재정렬돼 클릭하려던 항목이 바뀌는 것 방지
     const [items] = useState<Item[]>(() => {
@@ -76,8 +80,22 @@ export default function SearchModal() {
     // ↑↓ 탐색은 섹션 구분 없이 한 줄로 이어진 목록 기준
     const flat = useMemo(() => sections.flatMap((s) => s.items), [sections])
 
+    // 포커스 복원: 마운트 시 현재 포커스 저장, 언마운트 시 복원
     useEffect(() => {
+        prevFocusRef.current = document.activeElement
         inputRef.current?.focus()
+        return () => {
+            (prevFocusRef.current as HTMLElement | null)?.focus()
+        }
+    }, [])
+
+    // body 스크롤 잠금
+    useEffect(() => {
+        const prev = document.body.style.overflow
+        document.body.style.overflow = 'hidden'
+        return () => {
+            document.body.style.overflow = prev
+        }
     }, [])
 
     // 선택 항목이 스크롤 영역 밖이면 따라가기
@@ -92,8 +110,30 @@ export default function SearchModal() {
         navigate(`/coins/${item.market}`)
     }
 
-    const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-        if (e.nativeEvent.isComposing) return   // 한글 조합 중 Enter/방향키 무시
+    const onKeyDown = (e: React.KeyboardEvent) => {
+        // 포커스 트랩: Tab 키 순환
+        if (e.key === 'Tab') {
+            const modal = modalRef.current
+            if (!modal) return
+            const focusable = Array.from(modal.querySelectorAll<HTMLElement>(FOCUSABLE))
+            if (focusable.length === 0) return
+            const first = focusable[0]
+            const last = focusable[focusable.length - 1]
+            if (e.shiftKey) {
+                if (document.activeElement === first) {
+                    e.preventDefault()
+                    last.focus()
+                }
+            } else {
+                if (document.activeElement === last) {
+                    e.preventDefault()
+                    first.focus()
+                }
+            }
+            return
+        }
+
+        if ((e.nativeEvent as InputEvent).isComposing) return   // 한글 조합 중 Enter/방향키 무시
 
         switch (e.key) {
             case 'ArrowDown':
@@ -120,16 +160,20 @@ export default function SearchModal() {
         }
     }
 
+    const activeOptId = flat.length > 0 ? `search-opt-${activeIndex}` : undefined
+
     let offset = 0
 
     return createPortal(
         <div className={styles.backdrop} onMouseDown={closeSearch}>
             <div
+                ref={modalRef}
                 className={styles.modal}
                 role="dialog"
                 aria-modal="true"
                 aria-label="코인 검색"
                 onMouseDown={(e) => e.stopPropagation()}
+                onKeyDown={onKeyDown}
             >
                 <div className={styles.inputWrap}>
                     <SearchIcon className={styles.inputIcon} />
@@ -143,8 +187,12 @@ export default function SearchModal() {
                             setQuery(e.target.value)
                             setActiveIndex(0)
                         }}
-                        onKeyDown={onKeyDown}
+                        role="combobox"
                         aria-label="코인명 또는 심볼"
+                        aria-expanded={flat.length > 0}
+                        aria-autocomplete="list"
+                        aria-activedescendant={activeOptId}
+                        aria-haspopup="listbox"
                     />
                 </div>
 
@@ -169,13 +217,16 @@ export default function SearchModal() {
                                 {section.items.length === 0 ? (
                                     <p className={styles.empty}>검색 결과가 없어요</p>
                                 ) : (
-                                    <ul>
+                                    <ul role="listbox">
                                         {section.items.map((item, i) => {
                                             const index = start + i
                                             return (
-                                                <li key={item.market}>
+                                                <li key={item.market} role="presentation">
                                                     <button
                                                         type="button"
+                                                        id={`search-opt-${index}`}
+                                                        role="option"
+                                                        aria-selected={index === activeIndex}
                                                         data-index={index}
                                                         className={styles.row}
                                                         data-active={index === activeIndex}
