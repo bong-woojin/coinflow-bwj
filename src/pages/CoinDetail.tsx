@@ -36,28 +36,28 @@ export default function CoinDetail() {
 
     useEffect(() => {
         if (!market) return
-        async function load() {
+        async function load(code: string) {
             try {
                 setIsLoading(true)
                 setError(null)
                 const [marketRes, tickerRes] = await Promise.all([
                     fetchUpbit(upbitApi.marketAll()),
-                    fetchUpbit(upbitApi.ticker(market!)),
+                    fetchUpbit(upbitApi.ticker(code)),
                 ])
                 if (!marketRes.ok || !tickerRes.ok) throw new Error('시세를 불러오지 못했습니다')
                 const markets: UpbitMarket[] = await marketRes.json()
                 const tickers: UpbitTicker[] = await tickerRes.json()
-                const found = markets.find((m) => m.market === market)
-                setKoreanName(found?.korean_name ?? market!)
+                const found = markets.find((m) => m.market === code)
+                setKoreanName(found?.korean_name ?? code)
                 setEnglishName(found?.english_name ?? '')
-                setSnapshot(tickers[0])
+                setSnapshot(tickers[0] ?? null)
             } catch (e) {
                 setError(e instanceof Error ? e.message : '알 수 없는 오류가 발생했습니다')
             } finally {
                 setIsLoading(false)
             }
         }
-        load()
+        load(market)
     }, [market])
 
     if (isLoading) return <div className={styles.loading}>불러오는 중…</div>

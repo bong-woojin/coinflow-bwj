@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { useMarketStore } from '../store/market'
 import type { Ticker, UpbitMarket, UpbitTicker, UpbitSocketTicker } from '../types'
-import { subscribeUpbit } from './upbitSocket'
+import { subscribeTicker } from './upbitSocket'
 import { fetchUpbit, upbitApi } from './upbitApi'
 
 export function useMarketFeed() {
@@ -70,11 +70,7 @@ export function useMarketFeed() {
     useEffect(() => {
         if (!codesKey) return
 
-        return subscribeUpbit<UpbitSocketTicker>({
-            type: 'ticker',
-            codes: codesKey.split(','),
-            onMessage: (d) => bufferRef.current.set(d.code, d),
-        })
+        return subscribeTicker(codesKey.split(','), (d) => bufferRef.current.set(d.code, d))
     }, [codesKey])
 
     // 200ms마다 버퍼를 스토어에 반영

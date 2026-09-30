@@ -28,9 +28,9 @@ export function usePeriodBases(market: string) {
         let cancelled = false
 
         const get = (url: string) =>
-            fetchUpbit(url).then((res) => {
+            fetchUpbit(url).then((res): Promise<UpbitCandle[]> => {
                 if (!res.ok) throw new Error('기간별 시세를 불러오지 못했습니다')
-                return res.json() as Promise<UpbitCandle[]>
+                return res.json()
             })
 
         Promise.all([

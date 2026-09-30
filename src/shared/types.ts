@@ -32,8 +32,13 @@ export type UpbitTicker = {
     acc_trade_volume_24h: number
 }
 
+export type UpbitStreamType = 'SNAPSHOT' | 'REALTIME'
+
 export type UpbitSocketTicker = {
+    type: 'ticker'
+    stream_type: UpbitStreamType
     code: string
+    prev_closing_price: number
     trade_price: number
     signed_change_rate: number
     signed_change_price: number
@@ -45,6 +50,26 @@ export type UpbitSocketTicker = {
     acc_ask_volume: number          // 누적 매도 체결량 (UTC 0시 = KST 09시부터)
     highest_52_week_price: number
     lowest_52_week_price: number
+}
+
+export type UpbitSocketTrade = {
+    type: 'trade'
+    stream_type: UpbitStreamType
+    code: string
+    sequential_id: string           // 17자리라 parseUpbitJson에서 문자열로 변환됨
+    trade_price: number
+    trade_volume: number
+    ask_bid: 'ASK' | 'BID'
+    prev_closing_price: number
+    trade_timestamp: number
+}
+
+export type UpbitSocketMessage = UpbitSocketTicker | UpbitSocketTrade
+
+// 시세가 아닌 응답 — PING에 대한 {"status":"UP"}, 요청 오류 {"error":{...}}
+export type UpbitSocketNotice = {
+    status?: string
+    error?: { name: string; message: string }
 }
 
 export type Trade = {

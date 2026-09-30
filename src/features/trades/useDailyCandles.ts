@@ -23,9 +23,9 @@ export function useDailyCandles(market: string, count = 30) {
         let cancelled = false
 
         fetchUpbit(upbitApi.candles('days', market, count))
-            .then((res) => {
+            .then((res): Promise<UpbitDayCandle[]> => {
                 if (!res.ok) throw new Error('일별 시세를 불러오지 못했습니다')
-                return res.json() as Promise<UpbitDayCandle[]>
+                return res.json()
             })
             .then((data) => {
                 if (cancelled) return

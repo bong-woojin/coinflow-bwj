@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
-import type { Trade } from '../types'
-import { parseUpbitJson, subscribeUpbit } from './upbitSocket'
+import type { Trade, UpbitSocketTrade } from '../types'
+import { parseUpbitJson, subscribeTrade } from './upbitSocket'
 import { fetchUpbit, upbitApi } from './upbitApi'
 
 const MAX = 100
@@ -11,10 +11,6 @@ type UpbitTradeTick = {
     trade_volume: number
     ask_bid: 'ASK' | 'BID'
     timestamp: number
-}
-
-type UpbitSocketTrade = Omit<UpbitTradeTick, 'timestamp'> & {
-    trade_timestamp: number
 }
 
 type TradesState = {
@@ -34,7 +30,7 @@ export function useUpbitTrades(market: string | undefined) {
             .then((res) => res.text())
             .then((text) => {
                 if (cancelled) return
-                const data: UpbitTradeTick[] = parseUpbitJson(text)
+                const data = parseUpbitJson<UpbitTradeTick[]>(text)
                 setState({
                     market,
                     trades: data.map((t) => ({
@@ -48,24 +44,20 @@ export function useUpbitTrades(market: string | undefined) {
             })
             .catch(() => {})
 
-        const unsubscribe = subscribeUpbit<UpbitSocketTrade>({
-            type: 'trade',
-            codes: [market],
-            onMessage: (d) => {
-                const trade: Trade = {
-                    id: String(d.sequential_id),
-                    price: d.trade_price,
-                    volume: d.trade_volume,
-                    askBid: d.ask_bid,
-                    timestamp: d.trade_timestamp,
-                }
-                setState((prev) => {
-                    // 이전 코인의 목록이 남아 있으면 버리고 새로 시작
-                    const prevTrades = prev.market === market ? prev.trades : []
-                    if (prevTrades.some((t) => t.id === trade.id)) return prev
-                    return { market, trades: [trade, ...prevTrades].slice(0, MAX) }
-                })
-            },
+        const unsubscribe = subscribeTrade([market], (d: UpbitSocketTrade) => {
+            const trade: Trade = {
+                id: String(d.sequential_id),
+                price: d.trade_price,
+                volume: d.trade_volume,
+                askBid: d.ask_bid,
+                timestamp: d.trade_timestamp,
+            }
+            setState((prev) => {
+                // 이전 코인의 목록이 남아 있으면 버리고 새로 시작
+                const prevTrades = prev.market === market ? prev.trades : []
+                if (prevTrades.some((t) => t.id === trade.id)) return prev
+                return { market, trades: [trade, ...prevTrades].slice(0, MAX) }
+            })
         })
 
         return () => {
