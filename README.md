@@ -182,7 +182,7 @@ React DevTools Profiler로 **10초간** 측정한 수치입니다.
 
 | 최적화 전 | 배칭 적용 후 | 최종 |
 |---|---|---|
-| ![최적화 전](screenshot/측정2.png) | ![배칭 적용 후](screenshot/재측정-1.png) | ![최종](screenshot/재측정-3.png) |
+| ![최적화 전](screenshot/perf-before.png) | ![배칭 적용 후](screenshot/perf-batching.png) | ![최종](screenshot/perf-final.png) |
 
 ### 1. WebSocket 배칭
 

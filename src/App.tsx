@@ -1,15 +1,17 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import AppLayout from "./layouts/AppLayout.tsx";
-import Home from "./pages/Home.tsx";
-import CoinDetail from "./pages/CoinDetail.tsx";
+import AppLayout from './layouts/AppLayout'
+import Home from './pages/Home'
+import CoinDetail from './pages/CoinDetail'
+import NotFound from './pages/NotFound'
 
 export default function App() {
     return (
-        <BrowserRouter>        {/* 고정 */}
-            <Routes>             {/* 고정 */}
-                <Route element={<AppLayout />}>              {/* 레이아웃 쓸 때만 */}
-                    <Route path="/" element={<Home />} />                    {/* ← 여기만 */}
-                    <Route path="/coins/:market" element={<CoinDetail />} /> {/* ← 여기만 */}
+        <BrowserRouter>
+            <Routes>
+                <Route element={<AppLayout />}>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/coins/:market" element={<CoinDetail />} />
+                    <Route path="*" element={<NotFound />} />
                 </Route>
             </Routes>
         </BrowserRouter>

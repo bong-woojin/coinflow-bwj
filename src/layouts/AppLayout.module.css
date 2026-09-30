@@ -11,10 +11,6 @@
     background: var(--bg);
 }
 
-.shell[data-aside='closed'] {
-    padding-right: 56px;
-}
-
 .gnb {
     grid-area: gnb;
     min-width: 0;

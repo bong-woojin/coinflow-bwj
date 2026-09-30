@@ -13,7 +13,6 @@ export default function AppLayout() {
     const sidebarTab = useUi((s) => s.sidebarTab)
     const asideOpen = useUi((s) => s.asideOpen)
 
-    const mainRef = useScrollFade<HTMLElement>()
     const asideRef = useScrollFade<HTMLElement>()
 
     useMarketFeed()
@@ -24,7 +23,7 @@ export default function AppLayout() {
                 <Gnb />
             </header>
 
-            <main ref={mainRef} className={styles.main}>
+            <main className={styles.main}>
                 <Outlet />
             </main>
 
