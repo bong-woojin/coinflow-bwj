@@ -28,7 +28,7 @@
     flex-direction: column;
     min-width: 0;
     min-height: 0;
-    padding: 0 16px 16px 16px;
+    padding: 0 16px 12px 16px;
     padding-right: calc(var(--aside-w) + 16px);
     overflow-x: auto;
     overflow-y: hidden;
