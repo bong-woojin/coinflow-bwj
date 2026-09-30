@@ -26,6 +26,22 @@ type Section = {
 }
 
 const FOCUSABLE = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+const LISTBOX_ID = 'search-listbox'
+
+// getState는 구독하지 않음 — 호출한 시점의 값으로 고정
+function snapshotItems(): Item[] {
+    const { tickers, liveMap } = useMarketStore.getState()
+    return tickers.map((t) => {
+        const live = liveMap[t.market]
+        return {
+            market: t.market,
+            koreanName: t.koreanName,
+            symbol: toSymbol(t.market),
+            changeRate: live?.signed_change_rate ?? t.changeRate,
+            tradeAmount: live?.acc_trade_price_24h ?? t.accTradePrice24h,
+        }
+    })
+}
 
 export default function SearchModal() {
     const navigate = useNavigate()
@@ -37,22 +53,14 @@ export default function SearchModal() {
     const inputRef = useRef<HTMLInputElement>(null)
     const listRef = useRef<HTMLDivElement>(null)
     const modalRef = useRef<HTMLDivElement>(null)
-    const prevFocusRef = useRef<Element | null>(null)
+    const prevFocusRef = useRef<HTMLElement | null>(null)
+    const restoreFocusRef = useRef(true)
 
-    // 열릴 때 한 번만 스냅샷 (getState는 구독하지 않음) — 200ms마다 재정렬돼 클릭하려던 항목이 바뀌는 것 방지
-    const [items] = useState<Item[]>(() => {
-        const { tickers, liveMap } = useMarketStore.getState()
-        return tickers.map((t) => {
-            const live = liveMap[t.market]
-            return {
-                market: t.market,
-                koreanName: t.koreanName,
-                symbol: toSymbol(t.market),
-                changeRate: live?.signed_change_rate ?? t.changeRate,
-                tradeAmount: live?.acc_trade_price_24h ?? t.accTradePrice24h,
-            }
-        })
-    })
+    // 한 번만 스냅샷 — 200ms마다 재정렬돼 클릭하려던 항목이 바뀌는 것 방지
+    // 시세 로딩 전에 열렸다면 tickers가 0 → n 이 되는 시점에 한 번 다시 뜸
+    const hasTickers = useMarketStore((s) => s.tickers.length > 0)
+    const [items, setItems] = useState<Item[]>(snapshotItems)
+    if (hasTickers && items.length === 0) setItems(snapshotItems())
 
     const keyword = query.trim().toLowerCase()
 
@@ -80,10 +88,11 @@ export default function SearchModal() {
 
     // 포커스 복원: 마운트 시 현재 포커스 저장, 언마운트 시 복원
     useEffect(() => {
-        prevFocusRef.current = document.activeElement
+        const active = document.activeElement
+        prevFocusRef.current = active instanceof HTMLElement ? active : null
         inputRef.current?.focus()
         return () => {
-            ;(prevFocusRef.current as HTMLElement | null)?.focus()
+            if (restoreFocusRef.current) prevFocusRef.current?.focus()
         }
     }, [])
 
@@ -104,6 +113,8 @@ export default function SearchModal() {
 
     const go = (item: Item | undefined) => {
         if (!item) return
+        // 다른 페이지로 이동하므로 헤더 검색 버튼으로 포커스를 되돌리지 않음
+        restoreFocusRef.current = false
         closeSearch()
         navigate(`/coins/${item.market}`)
     }
@@ -113,7 +124,9 @@ export default function SearchModal() {
         if (e.key === 'Tab') {
             const modal = modalRef.current
             if (!modal) return
-            const focusable = Array.from(modal.querySelectorAll<HTMLElement>(FOCUSABLE))
+            const focusable = Array.from(modal.querySelectorAll<HTMLElement>(FOCUSABLE)).filter(
+                (el) => el.tabIndex >= 0,
+            )
             if (focusable.length === 0) return
             const first = focusable[0]
             const last = focusable[focusable.length - 1]
@@ -188,20 +201,34 @@ export default function SearchModal() {
                         role="combobox"
                         aria-label="코인명 또는 심볼"
                         aria-expanded={flat.length > 0}
+                        aria-controls={LISTBOX_ID}
                         aria-autocomplete="list"
                         aria-activedescendant={activeOptId}
                         aria-haspopup="listbox"
                     />
                 </div>
 
-                <div ref={listRef} className={styles.body}>
-                    {sections.map((section) => {
+                <div
+                    ref={listRef}
+                    id={LISTBOX_ID}
+                    className={styles.body}
+                    role={flat.length > 0 ? 'listbox' : undefined}
+                    aria-label={flat.length > 0 ? '코인 목록' : undefined}
+                >
+                    {sections.map((section, sectionIndex) => {
                         const start = offset
                         offset += section.items.length
+                        const hasItems = section.items.length > 0
+                        const titleId = `search-group-${sectionIndex}`
                         return (
-                            <section key={section.title} className={styles.section}>
-                                <header className={styles.sectionHead}>
-                                    <h3 className={styles.sectionTitle}>
+                            <section
+                                key={section.title}
+                                className={styles.section}
+                                role={hasItems ? 'group' : undefined}
+                                aria-labelledby={hasItems ? titleId : undefined}
+                            >
+                                <header className={styles.sectionHead} aria-hidden={hasItems}>
+                                    <h3 id={titleId} className={styles.sectionTitle}>
                                         {section.title}
                                         {keyword && (
                                             <span className={styles.count}>
@@ -216,10 +243,10 @@ export default function SearchModal() {
                                     )}
                                 </header>
 
-                                {section.items.length === 0 ? (
+                                {!hasItems ? (
                                     <p className={styles.empty}>검색 결과가 없어요</p>
                                 ) : (
-                                    <ul role="listbox">
+                                    <ul role="presentation">
                                         {section.items.map((item, i) => {
                                             const index = start + i
                                             return (
@@ -228,6 +255,7 @@ export default function SearchModal() {
                                                         type="button"
                                                         id={`search-opt-${index}`}
                                                         role="option"
+                                                        tabIndex={-1}
                                                         aria-selected={index === activeIndex}
                                                         data-index={index}
                                                         className={styles.row}

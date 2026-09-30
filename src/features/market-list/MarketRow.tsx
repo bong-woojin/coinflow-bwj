@@ -1,5 +1,5 @@
 import { memo } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { useMarketStore } from '../../shared/store/market'
 import {
     formatPrice,
@@ -40,7 +40,6 @@ function MarketRow({
     fallbackCoinVolume,
 }: MarketRowProps) {
     const live = useMarketStore((s) => s.liveMap[market])
-    const navigate = useNavigate()
 
     const tradePrice = live?.trade_price ?? fallbackPrice
     const changeRate = live?.signed_change_rate ?? fallbackRate
@@ -53,7 +52,7 @@ function MarketRow({
     const rateCellRef = useFlash<HTMLSpanElement>(tradePrice, getDirection(changeRate))
 
     return (
-        <div className={styles.row} role="row" onClick={() => navigate(`/coins/${market}`)}>
+        <div className={styles.row} role="row">
             <span role="cell">
                 <WatchButton market={market} />
             </span>

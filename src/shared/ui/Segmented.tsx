@@ -52,7 +52,8 @@ export default function Segmented<T extends string>({
                     role="tab"
                     id={id ? `${id}-${o.value}` : undefined}
                     aria-selected={o.value === value}
-                    aria-controls={id ? `${id}-panel-${o.value}` : undefined}
+                    // 패널은 활성 탭 것 하나만 렌더되므로 존재하는 id만 가리킴
+                    aria-controls={id && o.value === value ? `${id}-panel-${o.value}` : undefined}
                     className={styles.item}
                     data-tone={tone}
                     tabIndex={o.value === value ? 0 : -1}

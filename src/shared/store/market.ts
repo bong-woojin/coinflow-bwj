@@ -5,7 +5,6 @@ type Derived = {
     upCount: number
     downCount: number
     totalTradePrice: number
-    rankMap: Record<string, number> // 거래대금 순위 (1위부터)
 }
 
 type MarketState = Derived & {
@@ -25,23 +24,16 @@ function derive(tickers: Ticker[], liveMap: Record<string, UpbitSocketTicker>): 
     let upCount = 0
     let downCount = 0
     let totalTradePrice = 0
-    const amounts: { market: string; amount: number }[] = []
 
     for (const t of tickers) {
         const live = liveMap[t.market]
         const rate = live?.signed_change_rate ?? t.changeRate
-        const amount = live?.acc_trade_price_24h ?? t.accTradePrice24h
         if (rate > 0) upCount++
         else if (rate < 0) downCount++
-        totalTradePrice += amount
-        amounts.push({ market: t.market, amount })
+        totalTradePrice += live?.acc_trade_price_24h ?? t.accTradePrice24h
     }
 
-    amounts.sort((a, b) => b.amount - a.amount)
-    const rankMap: Record<string, number> = {}
-    amounts.forEach((a, i) => (rankMap[a.market] = i + 1))
-
-    return { upCount, downCount, totalTradePrice, rankMap }
+    return { upCount, downCount, totalTradePrice }
 }
 
 export const useMarketStore = create<MarketState>((set) => ({
@@ -53,7 +45,6 @@ export const useMarketStore = create<MarketState>((set) => ({
     upCount: 0,
     downCount: 0,
     totalTradePrice: 0,
-    rankMap: {},
     setTickers: (tickers, at) =>
         set((s) => ({ tickers, snapshotAt: at, ...derive(tickers, s.liveMap) })),
     applyLiveBatch: (list) =>

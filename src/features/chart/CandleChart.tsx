@@ -171,6 +171,7 @@ export default function CandleChart({ market, timeframe = '1m' }: CandleChartPro
                 raw = await res.json()
             } catch {
                 if (cancelled) return
+                rawCandlesRef.current = []
                 seriesRef.current?.setData([])
                 volumeRef.current?.setData([])
                 setFailed(true)

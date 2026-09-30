@@ -47,11 +47,11 @@
 }
 
 .row {
+    position: relative;
     height: 44px;
     font-size: 13px;
     font-weight: 600;
     color: var(--text-primary);
-    cursor: pointer;
     border-bottom: 1px solid var(--divider);
 }
 
@@ -69,6 +69,11 @@
 
 .row a {
     color: inherit;
+}
+
+.row button {
+    position: relative;
+    z-index: 1;
 }
 
 .row a:focus-visible {
@@ -90,6 +95,13 @@
     min-width: 0;
     overflow: hidden;
     width: 100%;
+}
+
+/* 행 전체를 링크 클릭 영역으로 */
+.coinLink::after {
+    content: '';
+    position: absolute;
+    inset: 0;
 }
 
 .coinSymbol {
